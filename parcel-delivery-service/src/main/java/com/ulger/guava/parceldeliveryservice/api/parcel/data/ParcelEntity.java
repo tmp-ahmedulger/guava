@@ -19,6 +19,9 @@ public class ParcelEntity {
     @Column(name = "id", unique = true, nullable = false, precision = 10)
     private Long id;
 
+    @Column(name = "userId", nullable = false, length = 64)
+    private Long userId;
+
     @Column(name = "barcode", nullable = false, length = 64)
     private String barcode;
 
