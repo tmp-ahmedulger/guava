@@ -14,14 +14,16 @@ public class DefaultUserManager implements UserManager {
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultUserManager.class);
 
-    private UserDao userDao;
-    private UserValidator userValidator;
-    private CredentialEncoder credentialEncoder;
+    private final UserDao userDao;
+    private final UserValidator userValidator;
+    private final CredentialEncoder credentialEncoder;
+    private final UserMapper userMapper;
 
-    public DefaultUserManager(UserDao userDao, UserValidator userValidator, CredentialEncoder credentialEncoder) {
+    public DefaultUserManager(UserDao userDao, UserValidator userValidator, CredentialEncoder credentialEncoder, UserMapper userMapper) {
         this.userDao = userDao;
         this.userValidator = userValidator;
         this.credentialEncoder = credentialEncoder;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -44,25 +46,22 @@ public class DefaultUserManager implements UserManager {
         userDao
                 .findByEmail(modificationData.getEmail())
                 .ifPresent(customer -> {
-                    logger.error("Customer already exist with email {}", customer.getEmail());
-                    throw new UserAlreadyExistException("Customer already exist with email '" + customer.getEmail() + "'");
+                    logger.error("User already exist with email {}", customer.getEmail());
+                    throw new UserAlreadyExistException("User already exist with email '" + customer.getEmail() + "'");
                 });
 
-        User user = MutableUser.Builder
-                .instance()
-                .email(modificationData.getEmail())
-                .displayName(modificationData.getDisplayName())
-                .credential(credentialEncoder.encode(modificationData.getPassword()))
-                .build();
+        modificationData.setHashPassword(credentialEncoder.encode(modificationData.getRawPassword()));
+
+        User user = userMapper.mapModificationData(modificationData);
 
         if (logger.isDebugEnabled()) {
-            logger.debug("Customer is inserting");
+            logger.debug("User is inserting");
         }
 
         User recordedUser = userDao.insert(user);
 
         if (logger.isDebugEnabled()) {
-            logger.debug("Customer saved successfully");
+            logger.debug("User saved successfully");
         }
 
         return recordedUser;

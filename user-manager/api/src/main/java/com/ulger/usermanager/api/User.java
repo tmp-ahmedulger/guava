@@ -1,5 +1,7 @@
 package com.ulger.usermanager.api;
 
+import java.util.Set;
+
 public interface User {
 
     /**
@@ -25,4 +27,10 @@ public interface User {
      * @return credential
      */
     String getCredential();
+
+    /**
+     * Keeps which roles user has
+     * @return role list
+     */
+    Set<Role> getRoles();
 }

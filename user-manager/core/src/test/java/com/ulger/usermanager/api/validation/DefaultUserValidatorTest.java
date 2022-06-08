@@ -46,7 +46,7 @@ public class DefaultUserValidatorTest {
         UserModificationData userModificationData = new UserModificationData();
         userModificationData.setEmail("");
         userModificationData.setDisplayName("");
-        userModificationData.setPassword("");
+        userModificationData.setRawPassword("");
 
         ValidationResult validationResult = defaultCustomerValidator.validateToCreate(userModificationData);
 
@@ -65,7 +65,7 @@ public class DefaultUserValidatorTest {
         UserModificationData userModificationData = new UserModificationData();
         userModificationData.setEmail("a");
         userModificationData.setDisplayName("Ahmet");
-        userModificationData.setPassword("123");
+        userModificationData.setRawPassword("123");
 
         ValidationResult validationResult = defaultCustomerValidator.validateToCreate(userModificationData);
 

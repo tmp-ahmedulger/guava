@@ -117,7 +117,7 @@ public class DefaultUserManagerTest {
 
         UserModificationData userModificationData = new UserModificationData();
         userModificationData.setEmail("emailX");
-        userModificationData.setPassword("passwordX");
+        userModificationData.setRawPassword("passwordX");
         userModificationData.setDisplayName("displayNameX");
 
         customerManager.add(userModificationData);
@@ -135,8 +135,7 @@ public class DefaultUserManagerTest {
     }
 
     private User createSimpleCustomer() {
-        return MutableUser.Builder
-                .instance()
+        return MutableUser.builder()
                 .email("emailX")
                 .displayName("displayNameX")
                 .credential("credentialX")

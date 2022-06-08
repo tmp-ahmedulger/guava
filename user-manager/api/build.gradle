@@ -13,8 +13,6 @@ repositories {
 dependencies {
     implementation 'com.ulger:api-utils:1.0'
     implementation 'org.slf4j:slf4j-api:1.7.36'
-
-    testImplementation 'junit:junit:4.13.2'
 }
 
 publishing {

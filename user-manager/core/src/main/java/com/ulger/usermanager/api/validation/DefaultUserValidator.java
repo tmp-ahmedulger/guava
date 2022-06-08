@@ -22,9 +22,9 @@ public class DefaultUserValidator implements UserValidator {
 
     private static class ValidationHelper {
 
-        private EmailValidator EmailValidator;
-        private UserModificationData modificationData;
-        private ValidationResult validationResult;
+        private final EmailValidator EmailValidator;
+        private final UserModificationData modificationData;
+        private final ValidationResult validationResult;
 
         static ValidationHelper newInstance(EmailValidator EmailValidator, UserModificationData userModificationData) {
             return new ValidationHelper(EmailValidator, userModificationData);
@@ -52,7 +52,7 @@ public class DefaultUserValidator implements UserValidator {
                 validationResult.addError("Given email is not valid");
             }
 
-            if (StringUtils.isBlank(modificationData.getPassword())) {
+            if (StringUtils.isBlank(modificationData.getRawPassword())) {
                 validationResult.addError("Password is required");
             }
 
