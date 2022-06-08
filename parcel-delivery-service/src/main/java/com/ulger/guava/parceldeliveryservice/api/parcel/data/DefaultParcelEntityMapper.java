@@ -1,5 +1,6 @@
 package com.ulger.guava.parceldeliveryservice.api.parcel.data;
 
+import com.ulger.guava.parceldeliveryservice.api.parcel.DefaultParcel;
 import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -21,5 +22,5 @@ public interface DefaultParcelEntityMapper extends ParcelEntityMapper {
     @Mapping(source = "parcelEntity.weightInGrams", target = "weightInGrams")
     @Mapping(source = "parcelEntity.deliveryAddress", target = "deliveryAddress")
     @Mapping(source = "parcelEntity.loadingStatus", target = "loadingStatus")
-    Parcel map(ParcelEntity parcelEntity);
+    DefaultParcel map(ParcelEntity parcelEntity);
 }

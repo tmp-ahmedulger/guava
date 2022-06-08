@@ -7,10 +7,10 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Setter(AccessLevel.PACKAGE)
+@Setter
 @Getter
 @Entity
-@Table(name = "parcel_delivery", indexes = @Index(name = "idx_1_unq_barcode", unique = true, columnList = "barcode"))
+@Table(name = "parcel", indexes = @Index(name = "idx_1_unq_barcode", unique = true, columnList = "barcode"))
 public class ParcelEntity {
 
     @Id
