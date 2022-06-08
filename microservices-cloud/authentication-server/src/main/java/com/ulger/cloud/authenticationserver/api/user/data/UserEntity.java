@@ -1,10 +1,13 @@
 package com.ulger.cloud.authenticationserver.api.user.data;
 
 import com.ulger.usermanager.api.User;
+import lombok.AccessLevel;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Set;
 
+@Setter(AccessLevel.PACKAGE)
 @Entity
 @Table(name = "users", indexes = @Index(name = "idx_1_unq_email", unique = true, columnList = "email"))
 public class UserEntity implements User {

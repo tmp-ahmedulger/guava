@@ -20,6 +20,11 @@ public class DefaultUserDao implements UserDao {
 
     @Override
     public User insert(User user) {
-        return null;
+        UserEntity userEntity = new UserEntity();
+        userEntity.setEmail(user.getEmail());
+        userEntity.setDisplayName(user.getDisplayName());
+        userEntity.setPwdHash(user.getCredential());
+
+        return userRepository.save(userEntity);
     }
 }
