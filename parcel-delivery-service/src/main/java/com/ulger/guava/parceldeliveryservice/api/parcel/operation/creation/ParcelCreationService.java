@@ -7,7 +7,7 @@ import com.ulger.guava.parceldeliveryservice.api.parcel.ParcelOperationException
 /**
  * This interface defines creation operations of parcels.
  */
-public interface ParcelCreationManager {
+public interface ParcelCreationService {
 
     /**
      * Creates a parcel with given data. Created parcel must be in Created status when it is created

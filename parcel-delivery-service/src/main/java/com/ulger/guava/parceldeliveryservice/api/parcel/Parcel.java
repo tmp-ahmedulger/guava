@@ -4,9 +4,13 @@ public interface Parcel {
 
     Long getId();
 
+    String getBarcode();
+
     Long getUserId();
 
     long getWeightInGrams();
 
     String getDeliveryAddress();
+
+    LoadingStatus getLoadingStatus();
 }

@@ -21,11 +21,12 @@ public class ParcelEntity {
 
     @Column(name = "barcode", nullable = false, length = 64)
     private String barcode;
+
     @Column(name = "weight_in_grams", unique = true, nullable = false)
-    private long weight_in_grams;
+    private long weightInGrams;
 
     @Column(name = "delivery_address", unique = true, nullable = false)
-    private String delivery_address;
+    private String deliveryAddress;
 
     @Convert(converter = LoadingStatusConverter.class)
     @Column(name = "loading_status", nullable = false)

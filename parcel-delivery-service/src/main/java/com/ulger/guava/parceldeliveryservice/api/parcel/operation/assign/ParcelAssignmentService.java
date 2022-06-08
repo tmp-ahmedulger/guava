@@ -4,7 +4,7 @@ package com.ulger.guava.parceldeliveryservice.api.parcel.operation.assign;
  * This interfaces keeps the assignment operations.
  * Through assignment, each parcel will have a courier who will deliver the parcel.
  */
-public interface ParcelAssignmentManager {
+public interface ParcelAssignmentService {
 
     /**
      * Assigns given parcel to courier to deliver.

@@ -5,7 +5,7 @@ import com.ulger.guava.parceldeliveryservice.api.parcel.LoadingStatus;
 /**
  * This interface defines update operations of parcels status.
  */
-public interface ParcelStatusUpdatingManager {
+public interface ParcelStatusUpdatingService {
 
     /**
      * This method updated parcel loading status

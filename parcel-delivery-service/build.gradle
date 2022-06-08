@@ -26,7 +26,9 @@ dependencies {
 	implementation 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.6.6'
 
 	implementation 'com.ulger:api-utils:1.0'
+	implementation 'org.mapstruct:mapstruct:1.5.1.Final'
 
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
 	annotationProcessor 'org.projectlombok:lombok'
 
 	compileOnly 'org.projectlombok:lombok'
