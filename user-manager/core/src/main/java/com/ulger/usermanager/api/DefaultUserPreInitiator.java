@@ -2,15 +2,21 @@ package com.ulger.usermanager.api;
 
 import java.util.stream.Collectors;
 
-public class DefaultUserMapper implements UserMapper {
+public class DefaultUserPreInitiator implements UserPreInitiator {
+
+    private final CredentialEncoder credentialEncoder;
+
+    public DefaultUserPreInitiator(CredentialEncoder credentialEncoder) {
+        this.credentialEncoder = credentialEncoder;
+    }
 
     @Override
-    public User mapModificationData(UserModificationData modificationData) {
+    public User initiate(UserModificationData modificationData) {
 
         MutableUser mutableUser = new MutableUser();
 
         mutableUser.setEmail(modificationData.getEmail());
-        mutableUser.setCredential(modificationData.getHashPassword());
+        mutableUser.setCredential(credentialEncoder.encode(modificationData.getRawPassword()));
         mutableUser.setDisplayName(modificationData.getDisplayName());
         mutableUser.setRoles(
                 modificationData

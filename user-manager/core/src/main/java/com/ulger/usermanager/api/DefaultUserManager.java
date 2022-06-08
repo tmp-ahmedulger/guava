@@ -16,18 +16,16 @@ public class DefaultUserManager implements UserManager {
 
     private final UserDao userDao;
     private final UserValidator userValidator;
-    private final CredentialEncoder credentialEncoder;
-    private final UserMapper userMapper;
+    private final UserPreInitiator userPreInitiator;
 
-    public DefaultUserManager(UserDao userDao, UserValidator userValidator, CredentialEncoder credentialEncoder, UserMapper userMapper) {
+    public DefaultUserManager(UserDao userDao, UserValidator userValidator, UserPreInitiator userPreInitiator) {
         this.userDao = userDao;
         this.userValidator = userValidator;
-        this.credentialEncoder = credentialEncoder;
-        this.userMapper = userMapper;
+        this.userPreInitiator = userPreInitiator;
     }
 
     @Override
-    public Optional<User> getCustomerByEmail(String email) {
+    public Optional<User> getUserByEmail(String email) {
         if (StringUtils.isBlank(email)) {
             throw new IllegalArgumentException("Email is required");
         }
@@ -50,9 +48,7 @@ public class DefaultUserManager implements UserManager {
                     throw new UserAlreadyExistException("User already exist with email '" + customer.getEmail() + "'");
                 });
 
-        modificationData.setHashPassword(credentialEncoder.encode(modificationData.getRawPassword()));
-
-        User user = userMapper.mapModificationData(modificationData);
+        User user = userPreInitiator.initiate(modificationData);
 
         if (logger.isDebugEnabled()) {
             logger.debug("User is inserting");

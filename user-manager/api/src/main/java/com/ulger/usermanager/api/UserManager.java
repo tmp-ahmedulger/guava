@@ -10,7 +10,7 @@ public interface UserManager {
      * @throws IllegalArgumentException if given email is blank
      * @return Customer if matches with email or Optional.empty if not found
      */
-    Optional<User> getCustomerByEmail(String email);
+    Optional<User> getUserByEmail(String email);
 
     /**
      * Adds new customer
