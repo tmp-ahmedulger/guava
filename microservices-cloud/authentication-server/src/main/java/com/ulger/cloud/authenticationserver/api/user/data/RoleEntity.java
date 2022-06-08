@@ -1,10 +1,12 @@
 package com.ulger.cloud.authenticationserver.api.user.data;
 
+import com.ulger.usermanager.api.Role;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "role", indexes = @Index(name = "idx_1_unq_name", unique = true, columnList = "name"))
-public class RoleEntity {
+public class RoleEntity implements Role {
 
     @Id
     @GeneratedValue(generator = "seq_gen_role", strategy = GenerationType.SEQUENCE)
@@ -16,6 +18,10 @@ public class RoleEntity {
     private String name;
 
     public RoleEntity() {
+    }
+
+    public RoleEntity(Long id) {
+        this.id = id;
     }
 
     public Long getId() {

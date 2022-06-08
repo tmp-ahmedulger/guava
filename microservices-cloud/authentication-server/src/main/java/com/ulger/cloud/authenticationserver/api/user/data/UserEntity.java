@@ -1,10 +1,12 @@
 package com.ulger.cloud.authenticationserver.api.user.data;
 
+import com.ulger.usermanager.api.Role;
 import com.ulger.usermanager.api.User;
 import lombok.AccessLevel;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Setter(AccessLevel.PACKAGE)
@@ -57,7 +59,7 @@ public class UserEntity implements User {
         return pwdHash;
     }
 
-    public Set<RoleEntity> getRoles() {
-        return roles;
+    public Set<Role> getRoles() {
+        return new HashSet<>(roles);
     }
 }

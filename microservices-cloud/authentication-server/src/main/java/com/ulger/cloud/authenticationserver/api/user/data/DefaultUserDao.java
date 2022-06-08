@@ -4,6 +4,7 @@ import com.ulger.usermanager.api.User;
 import com.ulger.usermanager.api.data.UserDao;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class DefaultUserDao implements UserDao {
 
@@ -24,6 +25,13 @@ public class DefaultUserDao implements UserDao {
         userEntity.setEmail(user.getEmail());
         userEntity.setDisplayName(user.getDisplayName());
         userEntity.setPwdHash(user.getCredential());
+        userEntity.setRoles(
+                user
+                        .getRoles()
+                        .stream()
+                        .map(role -> new RoleEntity(role.getId()))
+                        .collect(Collectors.toSet())
+        );
 
         return userRepository.save(userEntity);
     }

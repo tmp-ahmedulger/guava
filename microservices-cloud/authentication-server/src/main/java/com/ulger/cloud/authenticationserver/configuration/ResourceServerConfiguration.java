@@ -12,7 +12,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 @EnableResourceServer
 public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
 
-    private TokenStore tokenStore;
+    private final TokenStore tokenStore;
 
     public ResourceServerConfiguration(TokenStore tokenStore) {
         this.tokenStore = tokenStore;

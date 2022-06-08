@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    implementation ('com.ulger:api-utils:1.0')
+    implementation 'com.ulger:api-utils:1.0'
     implementation project(':api')
 
     implementation 'org.slf4j:slf4j-api:1.7.36'

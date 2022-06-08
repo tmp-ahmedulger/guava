@@ -1,11 +1,10 @@
 package com.ulger.cloud.authenticationserver.configuration.servicecontext;
 
+import com.ulger.cloud.authenticationserver.api.user.BCryptCredentialHashEncoder;
 import com.ulger.cloud.authenticationserver.api.user.data.DefaultUserDao;
 import com.ulger.cloud.authenticationserver.api.user.data.UserRepository;
 import com.ulger.cloud.authenticationserver.authentication.DefaultUserDetailsService;
-import com.ulger.usermanager.api.CredentialEncoder;
-import com.ulger.usermanager.api.DefaultUserManager;
-import com.ulger.usermanager.api.UserManager;
+import com.ulger.usermanager.api.*;
 import com.ulger.usermanager.api.data.UserDao;
 import com.ulger.usermanager.api.validation.ApacheEmailValidator;
 import com.ulger.usermanager.api.validation.DefaultUserValidator;
@@ -31,14 +30,24 @@ public class CoreServiceConfiguration {
     }
 
     @Bean
+    public UserPreInitiator userPreInitiator() {
+        return new DefaultUserPreInitiator(credentialEncoder());
+    }
+
+    @Bean
     @Autowired
     public UserManager userManager(UserDao userDao, CredentialEncoder credentialEncoder) {
-        return new DefaultUserManager(userDao, new DefaultUserValidator(new ApacheEmailValidator()), credentialEncoder);
+        return new DefaultUserManager(userDao, new DefaultUserValidator(new ApacheEmailValidator()), userPreInitiator());
     }
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public CredentialEncoder credentialEncoder() {
+        return new BCryptCredentialHashEncoder(bCryptPasswordEncoder());
     }
 
     @Bean

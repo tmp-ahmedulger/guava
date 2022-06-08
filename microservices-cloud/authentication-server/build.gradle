@@ -18,6 +18,7 @@ ext {
 }
 
 dependencies {
+	implementation 'com.ulger:api-utils:1.0'
 	implementation 'com.ulger.usermanager:api:1.0'
 	implementation 'com.ulger.usermanager:core:1.0'
 

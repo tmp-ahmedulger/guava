@@ -1,10 +1,8 @@
 package com.ulger.cloud.authenticationserver.authentication;
 
-import com.ulger.cloud.authenticationserver.api.user.data.RoleEntity;
 import com.ulger.cloud.authenticationserver.api.user.data.UserEntity;
 import com.ulger.cloud.authenticationserver.api.user.data.UserRepository;
-import com.ulger.usermanager.api.User;
-import com.ulger.usermanager.api.data.UserDao;
+import com.ulger.usermanager.api.Role;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -40,7 +38,7 @@ public class DefaultUserDetailsService implements UserDetailsService {
         String[] authorities = user
                 .getRoles()
                 .stream()
-                .map(RoleEntity::getName)
+                .map(Role::getName)
                 .toArray(String[]::new);
 
         return AuthorityUtils.createAuthorityList(authorities);
