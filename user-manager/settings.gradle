@@ -1,0 +1,4 @@
+rootProject.name = 'user-manager'
+
+include 'api'
+include 'core'

@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+version '1.0'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    implementation ('com.ulger:api-utils:1.0')
+    implementation project(':api')
+
+    implementation 'org.slf4j:slf4j-api:1.7.36'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'commons-validator:commons-validator:1.7'
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-all:1.10.19'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.ulger.usermanager'
+            artifactId = 'core'
+            version = '1.0'
+
+            from components.java
+        }
+    }
+}
