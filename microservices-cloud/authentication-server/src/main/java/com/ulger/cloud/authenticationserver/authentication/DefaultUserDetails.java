@@ -18,6 +18,10 @@ public class DefaultUserDetails implements UserDetails {
 		this.authorities = authorities;
 	}
 
+	public Long getId() {
+		return user.getId();
+	}
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;

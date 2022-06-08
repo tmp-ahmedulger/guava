@@ -1,5 +1,6 @@
 package com.ulger.cloud.authenticationserver.configuration;
 
+import com.ulger.cloud.authenticationserver.authentication.JWTTokenEnhancer;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,7 +10,14 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.AccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableAuthorizationServer
@@ -18,24 +26,31 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
     private final AuthenticationManager authenticationManager;
     private final TokenStore tokenStore;
     private final PasswordEncoder passwordEncoder;
-    private final AccessTokenConverter accessTokenConverter;
+    private final JwtAccessTokenConverter accessTokenConverter;
+    private final JWTTokenEnhancer jwtTokenEnhancer;
 
     public OAuth2AuthorizationServerConfig(
             AuthenticationManager authenticationManager,
             TokenStore tokenStore,
             PasswordEncoder passwordEncoder,
-            AccessTokenConverter accessTokenConverter) {
+            JwtAccessTokenConverter accessTokenConverter,
+            JWTTokenEnhancer jwtTokenEnhancer) {
 
         this.authenticationManager = authenticationManager;
         this.tokenStore = tokenStore;
         this.passwordEncoder = passwordEncoder;
         this.accessTokenConverter = accessTokenConverter;
+        this.jwtTokenEnhancer = jwtTokenEnhancer;
     }
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
+        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(jwtTokenEnhancer, accessTokenConverter));
+
         endpoints
                 .tokenStore(tokenStore)
+                .tokenEnhancer(tokenEnhancerChain)
                 .accessTokenConverter(accessTokenConverter)
                 .authenticationManager(authenticationManager);
     }
