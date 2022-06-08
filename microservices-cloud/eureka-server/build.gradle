@@ -4,13 +4,7 @@ plugins {
 	id 'java'
 }
 
-group = 'com.ulger.cloud'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
-
-repositories {
-	mavenCentral()
-}
 
 ext {
 	set('springCloudVersion', "2021.0.3")
