@@ -1,0 +1,8 @@
+rootProject.name = 'microservices-cloud'
+
+include 'apigw'
+include 'config-server'
+include 'eureka-server'
+include 'order-service'
+include 'product-service'
+include 'authentication-server'

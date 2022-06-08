@@ -1,0 +1,10 @@
+server.port: 9090
+
+spring:
+  application.name: authentication-server
+  config:
+    import: "configserver:http://localhost:8888"
+
+logging:
+  level:
+    org.springframework: DEBUG

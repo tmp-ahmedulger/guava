@@ -1,0 +1,4 @@
+rootProject.name = 'guava'
+
+include 'parcel-delivery-service'
+include 'microservices-cloud'
