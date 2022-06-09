@@ -1,4 +1,4 @@
-package com.ulger.guava.parceldeliveryservice.security;
+package com.ulger.guava.parceldeliveryservice.api.authentication;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -7,10 +7,10 @@ import java.util.Optional;
 
 public class SecurityContextHelper {
 
-    public static Optional<DefaultUserDetails> getUserDetails() {
+    public static Optional<DefaultUserAuthentication> getAuthentication() {
         return Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
                 .map(Authentication::getPrincipal)
-                .filter(DefaultUserDetails.class::isInstance)
-                .map(DefaultUserDetails.class::cast);
+                .filter(DefaultUserAuthentication.class::isInstance)
+                .map(DefaultUserAuthentication.class::cast);
     }
 }
