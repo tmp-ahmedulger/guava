@@ -1,4 +1,4 @@
-package com.ulger.guava.parceldeliveryservice.api.authentication;
+package com.ulger.guava.parceldeliveryservice.authentication;
 
 import com.ulger.usermanager.api.Role;
 import com.ulger.usermanager.api.User;

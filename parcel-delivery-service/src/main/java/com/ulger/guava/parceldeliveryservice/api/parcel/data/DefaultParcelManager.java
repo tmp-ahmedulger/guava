@@ -3,6 +3,8 @@ package com.ulger.guava.parceldeliveryservice.api.parcel.data;
 import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class DefaultParcelManager implements ParcelManager {
 
@@ -15,13 +17,20 @@ public class DefaultParcelManager implements ParcelManager {
     }
 
     @Override
+    public Optional<Parcel> findById(Long id) {
+        return parcelRepository
+                .findById(id)
+                .map(parcelEntityMapper::mapFromEntity);
+    }
+
+    @Override
     public Parcel save(Parcel parcel) {
 
-        ParcelEntity parcelEntity = parcelEntityMapper.map(parcel);
+        ParcelEntity parcelEntity = parcelEntityMapper.mapToEntity(parcel);
         parcelRepository.save(parcelEntity);
 
         ParcelEntity savedEntity = parcelRepository.save(parcelEntity);
 
-        return parcelEntityMapper.map(savedEntity);
+        return parcelEntityMapper.mapFromEntity(savedEntity);
     }
 }

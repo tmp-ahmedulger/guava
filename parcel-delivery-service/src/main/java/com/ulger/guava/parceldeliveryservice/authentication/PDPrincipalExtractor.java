@@ -1,4 +1,4 @@
-package com.ulger.guava.parceldeliveryservice.api.authentication;
+package com.ulger.guava.parceldeliveryservice.authentication;
 
 import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 

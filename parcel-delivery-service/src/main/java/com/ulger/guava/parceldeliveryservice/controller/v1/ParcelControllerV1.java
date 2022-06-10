@@ -1,6 +1,6 @@
 package com.ulger.guava.parceldeliveryservice.controller.v1;
 
-import com.ulger.guava.parceldeliveryservice.api.authentication.SecurityContextHelper;
+import com.ulger.guava.parceldeliveryservice.authentication.SecurityContextHelper;
 import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.creation.ParcelCreationDto;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.creation.ParcelCreationService;

@@ -13,7 +13,8 @@ public class DefaultParcelCreationValidator implements ParcelCreationValidator {
         ValidationResult validationResult = new ValidationResult();
 
         if (parcelCreationDto == null) {
-            throw new IllegalArgumentException("");
+            validationResult.addError("Parcel creation update data is required");
+            return validationResult;
         }
 
         if (parcelCreationDto.getUserId() == null) {

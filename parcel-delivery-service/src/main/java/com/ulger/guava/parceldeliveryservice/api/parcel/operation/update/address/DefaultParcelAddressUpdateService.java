@@ -2,8 +2,8 @@ package com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.addres
 
 import com.ulger.exception.ApiException;
 import com.ulger.guava.parceldeliveryservice.api.ApiReasonCode;
-import com.ulger.guava.parceldeliveryservice.api.parcel.data.ParcelEntity;
-import com.ulger.guava.parceldeliveryservice.api.parcel.data.ParcelRepository;
+import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
+import com.ulger.guava.parceldeliveryservice.api.parcel.data.ParcelManager;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.OperationPermissionException;
 import com.ulger.validation.ValidationException;
 import com.ulger.validation.ValidationResult;
@@ -16,11 +16,11 @@ import java.util.Objects;
 @Service
 public class DefaultParcelAddressUpdateService implements ParcelAddressUpdateService {
 
-    private final ParcelRepository parcelRepository;
+    private final ParcelManager parcelManager;
     private final ParcelAddressUpdateValidator parcelAddressUpdateValidator;
 
-    public DefaultParcelAddressUpdateService(ParcelRepository parcelRepository, ParcelAddressUpdateValidator parcelAddressUpdateValidator) {
-        this.parcelRepository = parcelRepository;
+    public DefaultParcelAddressUpdateService(ParcelManager parcelManager, ParcelAddressUpdateValidator parcelAddressUpdateValidator) {
+        this.parcelManager = parcelManager;
         this.parcelAddressUpdateValidator = parcelAddressUpdateValidator;
     }
 
@@ -39,22 +39,22 @@ public class DefaultParcelAddressUpdateService implements ParcelAddressUpdateSer
                 parcelAddressUpdateDto.getUserId(),
                 parcelAddressUpdateDto.getDeliveryAddress());
 
-        ParcelEntity parcelEntity = parcelRepository
+        Parcel existingParcel = parcelManager
                 .findById(parcelAddressUpdateDto.getParcelId())
                 .orElseThrow(() -> new ApiException(ApiReasonCode.PARCEL_NOT_FOUND.getCode()));
 
-        if (!Objects.equals(parcelAddressUpdateDto.getUserId(), parcelEntity.getUserId())) {
+        if (!Objects.equals(parcelAddressUpdateDto.getUserId(), existingParcel.getUserId())) {
             log.warn("Illegal parcel update operation detected. Parcel with id '{}' is attempted to update by userId={}. Parcel owner userId is '{}'",
                     parcelAddressUpdateDto.getParcelId(),
                     parcelAddressUpdateDto.getUserId(),
-                    parcelEntity.getUserId());
+                    existingParcel.getUserId());
 
             throw new OperationPermissionException(parcelAddressUpdateDto.getUserId());
         }
 
-        if (Objects.equals(parcelAddressUpdateDto.getDeliveryAddress(), parcelEntity.getDeliveryAddress())) {
+        if (Objects.equals(parcelAddressUpdateDto.getDeliveryAddress(), existingParcel.getDeliveryAddress())) {
             log.info("Addresses are same, skipping update. SourceAddress={}, targetAddress={}",
-                    parcelEntity.getDeliveryAddress(),
+                    existingParcel.getDeliveryAddress(),
                     parcelAddressUpdateDto.getDeliveryAddress());
 
             throw new ApiException(ApiReasonCode.SAME_ADDRESS.getCode());
