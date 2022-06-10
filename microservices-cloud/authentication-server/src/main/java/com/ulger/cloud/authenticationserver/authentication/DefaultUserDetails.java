@@ -18,8 +18,8 @@ public class DefaultUserDetails implements UserDetails {
 		this.authorities = authorities;
 	}
 
-	public Long getId() {
-		return user.getId();
+	public User getUser() {
+		return user;
 	}
 
 	@Override
