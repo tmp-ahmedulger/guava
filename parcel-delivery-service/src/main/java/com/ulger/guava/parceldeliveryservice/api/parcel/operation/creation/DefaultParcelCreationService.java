@@ -1,5 +1,7 @@
 package com.ulger.guava.parceldeliveryservice.api.parcel.operation.creation;
 
+import com.ulger.guava.parceldeliveryservice.api.parcel.BarcodeGenerator;
+import com.ulger.guava.parceldeliveryservice.api.parcel.LoadingStatus;
 import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
 import com.ulger.guava.parceldeliveryservice.api.parcel.data.ParcelManager;
 import com.ulger.validation.ValidationException;
@@ -14,11 +16,18 @@ public class DefaultParcelCreationService implements ParcelCreationService {
     private final ParcelCreationValidator parcelCreationValidator;
     private final ParcelManager parcelManager;
     private final ParcelCreationDtoMapper parcelCreationDtoMapper;
+    private final BarcodeGenerator barcodeGenerator;
 
-    public DefaultParcelCreationService(ParcelCreationValidator parcelCreationValidator, ParcelManager parcelManager, ParcelCreationDtoMapper parcelCreationDtoMapper) {
+    public DefaultParcelCreationService(
+            ParcelCreationValidator parcelCreationValidator,
+            ParcelManager parcelManager,
+            ParcelCreationDtoMapper parcelCreationDtoMapper,
+            BarcodeGenerator barcodeGenerator) {
+
         this.parcelCreationValidator = parcelCreationValidator;
         this.parcelManager = parcelManager;
         this.parcelCreationDtoMapper = parcelCreationDtoMapper;
+        this.barcodeGenerator = barcodeGenerator;
     }
 
     @Override
@@ -35,9 +44,15 @@ public class DefaultParcelCreationService implements ParcelCreationService {
             throw new ValidationException(validationResult.getErrors());
         }
 
-        Parcel parcel = parcelCreationDtoMapper.map(parcelCreationDto);
+        Parcel mappedParcel = parcelCreationDtoMapper.map(parcelCreationDto);
 
-        Parcel savedParcel = parcelManager.save(parcel);
+        ParcelMutator parcelMutator = ParcelMutator.of(mappedParcel);
+        parcelMutator.setLoadingStatus(LoadingStatus.CREATED);
+        parcelMutator.setBarcode(barcodeGenerator.generate());
+
+        log.info("Parcel is being created with barcode={}", parcelMutator.getBarcode());
+
+        Parcel savedParcel = parcelManager.save(parcelMutator);
         log.info("Parcel created");
 
         return savedParcel;
