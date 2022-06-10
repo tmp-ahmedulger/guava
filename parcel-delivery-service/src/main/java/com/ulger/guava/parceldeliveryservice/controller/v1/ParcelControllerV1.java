@@ -50,7 +50,7 @@ public class ParcelControllerV1 {
 
         log.info("Parcel creation request has received, request={}, userId={}", parcelCreationRequest, userId);
 
-        ParcelCreationDto parcelCreationDto = defaultParcelCreationRequestMapper.map(parcelCreationRequest, 1L);
+        ParcelCreationDto parcelCreationDto = defaultParcelCreationRequestMapper.map(parcelCreationRequest, userId);
 
         return parcelCreationService.create(parcelCreationDto);
     }

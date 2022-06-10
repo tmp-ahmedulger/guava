@@ -10,6 +10,6 @@ import lombok.ToString;
 public class ParcelCreationDto {
 
     private Long userId;
-    private long weightInGrams;
+    private Long weightInGrams;
     private String deliveryAddress;
 }

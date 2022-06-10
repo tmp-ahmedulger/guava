@@ -7,7 +7,7 @@ import lombok.ToString;
 @ToString
 public class ParcelCreationRequest {
 
-    private long weightInGrams;
+    private Long weightInGrams;
     private String deliveryAddress;
 
     public long getWeightInGrams() {
