@@ -51,7 +51,7 @@ public class ParcelControllerV1 {
 
     @PreAuthorize("hasAuthority('STANDARD') or hasAuthority('ADMIN')")
     @PutMapping("/{parcelId}/address")
-    public ResponseEntity<Void> updateAddress(
+    public ResponseEntity<?> updateAddress(
             @RequestBody ParcelAddressUpdateRequest updateRequest,
             @PathVariable("parcelId") Long parcelId) {
 
@@ -66,7 +66,13 @@ public class ParcelControllerV1 {
                 .deliveryAddress(updateRequest.getDeliveryAddress())
                 .build();
 
-        addressUpdateService.update(addressUpdateDto);
+        boolean isUpdated = addressUpdateService.update(addressUpdateDto);
+
+        if (!isUpdated) {
+            return ResponseEntity
+                    .internalServerError()
+                    .body("Parcel address can not updated. Check administrators");
+        }
 
         return ResponseEntity.noContent().build();
     }

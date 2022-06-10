@@ -30,7 +30,7 @@ public class DefaultAddressUpdateService implements AddressUpdateService {
     }
 
     @Override
-    public void update(AddressUpdateDto addressUpdateDto) {
+    public boolean update(AddressUpdateDto addressUpdateDto) {
 
         ValidationResult validationResult = updateValidator.validate(addressUpdateDto);
 
@@ -52,8 +52,16 @@ public class DefaultAddressUpdateService implements AddressUpdateService {
 
         log.info("Parcel pre-condition check for address updating is completed. Parcel address is being updated");
 
-        parcelManager.updateDeliveryAddress(addressUpdateDto.getParcelId(), addressUpdateDto.getDeliveryAddress());
+        boolean isUpdated = parcelManager.updateDeliveryAddress(
+                addressUpdateDto.getParcelId(),
+                addressUpdateDto.getDeliveryAddress());
+
+        if (!isUpdated) {
+            log.info("The address of Parcel with id '{}' can not be updated", addressUpdateDto.getParcelId());
+        }
 
         log.info("The address of Parcel with id '{}' has been updated", addressUpdateDto.getParcelId());
+
+        return isUpdated;
     }
 }

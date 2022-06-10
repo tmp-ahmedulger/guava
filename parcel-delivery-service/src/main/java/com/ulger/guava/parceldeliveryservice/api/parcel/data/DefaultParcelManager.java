@@ -35,7 +35,7 @@ public class DefaultParcelManager implements ParcelManager {
     }
 
     @Override
-    public void updateDeliveryAddress(long parcelId, String deliveryAddress) {
-
+    public boolean updateDeliveryAddress(long parcelId, String deliveryAddress) {
+        return parcelRepository.updateDeliveryAddress(parcelId, deliveryAddress) > 0;
     }
 }

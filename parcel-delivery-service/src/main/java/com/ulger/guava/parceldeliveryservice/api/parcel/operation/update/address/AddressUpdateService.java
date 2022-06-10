@@ -14,6 +14,7 @@ public interface AddressUpdateService {
      * if parcel doesn't belong to user with given userId
      * @throws com.ulger.exception.ApiException with code 1 if given delivery address is same with current address
      * @throws com.ulger.exception.ApiException with code 2 if parcel not found
+     * @return true if update is successful or else false
      */
-    void update(AddressUpdateDto addressUpdateDto);
+    boolean update(AddressUpdateDto addressUpdateDto);
 }

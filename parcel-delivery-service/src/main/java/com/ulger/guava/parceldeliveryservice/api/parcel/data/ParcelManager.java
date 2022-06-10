@@ -10,5 +10,5 @@ public interface ParcelManager {
 
     Parcel save(Parcel parcel);
 
-    void updateDeliveryAddress(long parcelId, String deliveryAddress);
+    boolean updateDeliveryAddress(long parcelId, String deliveryAddress);
 }
