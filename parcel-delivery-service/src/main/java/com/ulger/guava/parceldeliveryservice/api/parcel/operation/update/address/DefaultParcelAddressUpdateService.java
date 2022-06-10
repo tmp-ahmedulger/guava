@@ -5,6 +5,9 @@ import com.ulger.guava.parceldeliveryservice.api.ApiReasonCode;
 import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
 import com.ulger.guava.parceldeliveryservice.api.parcel.data.ParcelManager;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.OperationPermissionException;
+import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.permission.AddressUpdatePermissionCheckParams;
+import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.permission.AddressUpdatePermissionChecker;
+import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.validation.ParcelAddressUpdateValidator;
 import com.ulger.validation.ValidationException;
 import com.ulger.validation.ValidationResult;
 import lombok.extern.slf4j.Slf4j;
@@ -17,17 +20,23 @@ import java.util.Objects;
 public class DefaultParcelAddressUpdateService implements ParcelAddressUpdateService {
 
     private final ParcelManager parcelManager;
-    private final ParcelAddressUpdateValidator parcelAddressUpdateValidator;
+    private final ParcelAddressUpdateValidator updateValidator;
+    private final AddressUpdatePermissionChecker permissionChecker;
 
-    public DefaultParcelAddressUpdateService(ParcelManager parcelManager, ParcelAddressUpdateValidator parcelAddressUpdateValidator) {
+    public DefaultParcelAddressUpdateService(
+            ParcelManager parcelManager,
+            ParcelAddressUpdateValidator updateValidator,
+            AddressUpdatePermissionChecker permissionChecker) {
+
         this.parcelManager = parcelManager;
-        this.parcelAddressUpdateValidator = parcelAddressUpdateValidator;
+        this.updateValidator = updateValidator;
+        this.permissionChecker = permissionChecker;
     }
 
     @Override
     public void update(ParcelAddressUpdateDto parcelAddressUpdateDto) {
 
-        ValidationResult validationResult = parcelAddressUpdateValidator.validate(parcelAddressUpdateDto);
+        ValidationResult validationResult = updateValidator.validate(parcelAddressUpdateDto);
 
         if (validationResult.hasError()) {
             log.error("Parcel address update data is invalid. ValidationResult={}", validationResult.getErrors());
@@ -43,13 +52,18 @@ public class DefaultParcelAddressUpdateService implements ParcelAddressUpdateSer
                 .findById(parcelAddressUpdateDto.getParcelId())
                 .orElseThrow(() -> new ApiException(ApiReasonCode.PARCEL_NOT_FOUND.getCode()));
 
-        if (!Objects.equals(parcelAddressUpdateDto.getUserId(), existingParcel.getUserId())) {
+
+        AddressUpdatePermissionCheckParams permissionCheckParams = new AddressUpdatePermissionCheckParams(
+                parcelAddressUpdateDto.getUserId(),
+                existingParcel.getUserId());
+
+        if (!permissionChecker.check(permissionCheckParams).isPermitted()) {
             log.warn("Illegal parcel update operation detected. Parcel with id '{}' is attempted to update by userId={}. Parcel owner userId is '{}'",
                     parcelAddressUpdateDto.getParcelId(),
                     parcelAddressUpdateDto.getUserId(),
                     existingParcel.getUserId());
 
-            throw new OperationPermissionException(parcelAddressUpdateDto.getUserId());
+            throw new OperationPermissionException(permissionCheckParams);
         }
 
         if (Objects.equals(parcelAddressUpdateDto.getDeliveryAddress(), existingParcel.getDeliveryAddress())) {

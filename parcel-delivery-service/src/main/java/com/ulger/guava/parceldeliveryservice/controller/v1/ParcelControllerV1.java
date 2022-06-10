@@ -6,11 +6,11 @@ import com.ulger.guava.parceldeliveryservice.api.parcel.operation.creation.Parce
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.creation.ParcelCreationService;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.ParcelAddressUpdateDto;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.ParcelAddressUpdateService;
-import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status.ParcelStatusUpdateService;
+import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status.ParcelLoadingStatusUpdateService;
 import com.ulger.guava.parceldeliveryservice.controller.v1.request.creation.ParcelCreationRequest;
 import com.ulger.guava.parceldeliveryservice.controller.v1.request.creation.ParcelCreationRequestMapper;
 import com.ulger.guava.parceldeliveryservice.controller.v1.request.update.ParcelAddressUpdateRequest;
-import com.ulger.guava.parceldeliveryservice.controller.v1.request.update.ParcelStatusUpdateRequest;
+import com.ulger.guava.parceldeliveryservice.controller.v1.request.update.ParcelLoadingStatusUpdateRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,18 +22,18 @@ public class ParcelControllerV1 {
 
     private final ParcelCreationService parcelCreationService;
     private final ParcelAddressUpdateService parcelAddressUpdateService;
-    private final ParcelStatusUpdateService parcelStatusUpdateService;
+    private final ParcelLoadingStatusUpdateService parcelLoadingStatusUpdateService;
     private final ParcelCreationRequestMapper defaultParcelCreationRequestMapper;
 
     public ParcelControllerV1(
             ParcelCreationService parcelCreationService,
             ParcelAddressUpdateService parcelAddressUpdateService,
-            ParcelStatusUpdateService parcelStatusUpdateService,
+            ParcelLoadingStatusUpdateService parcelLoadingStatusUpdateService,
             ParcelCreationRequestMapper defaultParcelCreationRequestMapper) {
 
         this.parcelCreationService = parcelCreationService;
         this.parcelAddressUpdateService = parcelAddressUpdateService;
-        this.parcelStatusUpdateService = parcelStatusUpdateService;
+        this.parcelLoadingStatusUpdateService = parcelLoadingStatusUpdateService;
         this.defaultParcelCreationRequestMapper = defaultParcelCreationRequestMapper;
     }
 
@@ -69,9 +69,9 @@ public class ParcelControllerV1 {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{parcelId}/status")
-    public ResponseEntity<Void> updateStatus(
-            @RequestBody ParcelStatusUpdateRequest updateRequest,
+    @PutMapping("/{parcelId}/loading-status")
+    public ResponseEntity<Void> updateLoadingStatus(
+            @RequestBody ParcelLoadingStatusUpdateRequest updateRequest,
             @PathVariable("parcelId") Long parcelId) {
 
         Long userId = SecurityContextHelper.getAuthenticated().getUserId();
@@ -79,7 +79,7 @@ public class ParcelControllerV1 {
         log.info("Parcel status update request received, parcelId={}, userId={}, status={}",
                 parcelId, userId, updateRequest.getLoadingStatus());
 
-        parcelStatusUpdateService.update(parcelId, userId, updateRequest.getLoadingStatus());
+        parcelLoadingStatusUpdateService.update(parcelId, userId, updateRequest.getLoadingStatus());
 
         return ResponseEntity.noContent().build();
     }

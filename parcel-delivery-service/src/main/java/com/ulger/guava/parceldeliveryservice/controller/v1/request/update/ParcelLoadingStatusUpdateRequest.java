@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import lombok.ToString;
 
 @ToString
-public class ParcelStatusUpdateRequest {
+public class ParcelLoadingStatusUpdateRequest {
 
     private String loadingStatus;
 

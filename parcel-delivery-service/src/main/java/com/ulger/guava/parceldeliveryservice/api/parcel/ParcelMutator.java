@@ -1,7 +1,5 @@
-package com.ulger.guava.parceldeliveryservice.api.parcel.operation.creation;
+package com.ulger.guava.parceldeliveryservice.api.parcel;
 
-import com.ulger.guava.parceldeliveryservice.api.parcel.LoadingStatus;
-import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
 import lombok.Getter;
 import lombok.Setter;
 

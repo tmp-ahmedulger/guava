@@ -5,7 +5,7 @@ package com.ulger.guava.parceldeliveryservice.api.parcel;
  */
 public class ParcelOperationException extends RuntimeException {
 
-    private int reason;
+    private final int reason;
 
     public int getReason() {
         return reason;

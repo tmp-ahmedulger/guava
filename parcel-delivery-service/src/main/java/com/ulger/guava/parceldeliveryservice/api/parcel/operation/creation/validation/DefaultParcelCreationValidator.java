@@ -1,5 +1,6 @@
-package com.ulger.guava.parceldeliveryservice.api.parcel.operation.creation;
+package com.ulger.guava.parceldeliveryservice.api.parcel.operation.creation.validation;
 
+import com.ulger.guava.parceldeliveryservice.api.parcel.operation.creation.ParcelCreationDto;
 import com.ulger.validation.ValidationResult;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;

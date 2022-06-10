@@ -1,5 +1,6 @@
-package com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address;
+package com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.validation;
 
+import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.ParcelAddressUpdateDto;
 import com.ulger.validation.ValidationResult;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;

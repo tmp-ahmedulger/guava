@@ -1,6 +1,6 @@
 package com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status;
 
-public interface ParcelStatusUpdateService {
+public interface ParcelLoadingStatusUpdateService {
 
     /**
      * This method updated parcel loading status

@@ -1,7 +1,7 @@
 package com.ulger.guava.parceldeliveryservice.api.parcel.data;
 
 import com.ulger.guava.parceldeliveryservice.api.parcel.LoadingStatus;
-import lombok.AccessLevel;
+import com.ulger.guava.parceldeliveryservice.api.parcel.data.converter.LoadingStatusConverter;
 import lombok.Getter;
 import lombok.Setter;
 

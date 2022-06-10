@@ -1,4 +1,4 @@
-package com.ulger.guava.parceldeliveryservice.api.parcel.data;
+package com.ulger.guava.parceldeliveryservice.api.parcel.data.converter;
 
 import com.ulger.guava.parceldeliveryservice.api.parcel.LoadingStatus;
 

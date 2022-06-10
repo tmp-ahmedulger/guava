@@ -1,0 +1,440 @@
+{
+	"info": {
+		"_postman_id": "ccf16c3b-2bb0-4da9-9860-5007ce9dfdce",
+		"name": "Parcel Delivery Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2011328"
+	},
+	"item": [
+		{
+			"name": "API",
+			"item": [
+				{
+					"name": "Create Parcel",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhaG1lZHVsZ2VyMkBnbWFpbC5jb20iLCJkaXNwbGF5TmFtZSI6IkFobWV0IMOcbGdlciIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJleHAiOjE2NTUwNDYzNDgsInVzZXJJZCI6MSwianRpIjoib3diOW01WHJ6cXVybDYwQWZlN2VWX3dtOUg4IiwiY2xpZW50X2lkIjoicGFyY2VsLWRlbGl2ZXJ5LXNlcnZpY2UifQ.YXdxRXfCR-SwcaYuC5zVGA1OKBWbfY49LxBipXq0qPDIm7qbmF9BWeoMdUuleOk2MxnHOBPQQmmsRW-4xXwKIglRXhurmD4-m1hV4tQWCgBNBlzqJpc50pjBc8xq9fDxeHucXfED-l11VkckMPU67FxETw5aJNUj1-yMM1-KFlAzr8erHbpr39hQ8ejv1kJssnkzdBcyRz0aEPptF6afS5O7eOaJtKVr7yaHtTkySarKxxxeT4t0xNaIhTPNu2HDdcXbF8bRqExvhLw2nHVrtHTXOkz5Z-Fho5hZ2BWCxjXhb9D7a9PNFaIkaqWuAhUYBgDgyKc6HObdJik6feVW2w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"weightInGrams\": 100,\n    \"deliveryAddress\": \"Address v1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host-parcel-delivery-service}}/rest/api/v1/parcel",
+							"host": [
+								"{{host-parcel-delivery-service}}"
+							],
+							"path": [
+								"rest",
+								"api",
+								"v1",
+								"parcel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "ahmedulger@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "displayName",
+									"value": "Ahmet Ülger",
+									"type": "text"
+								},
+								{
+									"key": "rawPassword",
+									"value": "q1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host-authentication-server}}/rest/api/v1/user",
+							"host": [
+								"{{host-authentication-server}}"
+							],
+							"path": [
+								"rest",
+								"api",
+								"v1",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Parcel Address",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"deliveryAddress\": \"Address v2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host-parcel-delivery-service}}/:parcelId/address",
+							"host": [
+								"{{host-parcel-delivery-service}}"
+							],
+							"path": [
+								":parcelId",
+								"address"
+							],
+							"variable": [
+								{
+									"key": "parcelId",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Parcel Status",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"loadingStatus\": \"Address v2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host-parcel-delivery-service}}/:parcelId/loading-status",
+							"host": [
+								"{{host-parcel-delivery-service}}"
+							],
+							"path": [
+								":parcelId",
+								"loading-status"
+							],
+							"variable": [
+								{
+									"key": "parcelId",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Oauth2 Token - password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"token\", jsonData.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{host-authentication-server}}/oauth/token?grant_type=password&username=ahmedulger@gmail.com&password=q1&client_id=parcel-delivery-service&client_secret=pwd-parcel-delivery-service",
+							"host": [
+								"{{host-authentication-server}}"
+							],
+							"path": [
+								"oauth",
+								"token"
+							],
+							"query": [
+								{
+									"key": "grant_type",
+									"value": "password"
+								},
+								{
+									"key": "username",
+									"value": "ahmedulger@gmail.com"
+								},
+								{
+									"key": "password",
+									"value": "q1"
+								},
+								{
+									"key": "client_id",
+									"value": "parcel-delivery-service"
+								},
+								{
+									"key": "client_secret",
+									"value": "pwd-parcel-delivery-service"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Oauth2 Code",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host-authentication-server}}/oauth/authorize?client_id=order-service&response_type=code&redirect_uri=http://localhost:8082/oauth/authorized&scope=read",
+							"host": [
+								"{{host-authentication-server}}"
+							],
+							"path": [
+								"oauth",
+								"authorize"
+							],
+							"query": [
+								{
+									"key": "client_id",
+									"value": "order-service"
+								},
+								{
+									"key": "response_type",
+									"value": "code"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://localhost:8082/oauth/authorized"
+								},
+								{
+									"key": "scope",
+									"value": "read"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Oauth2 Token - auhorization_code",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{host-authentication-server}}/oauth/token?client_id=order-service&client_secret=pwd-order-service&grant_type=authorization_code&code=6P8BcY&redirect_uri=http://localhost:8082/oauth/authorized",
+							"host": [
+								"{{host-authentication-server}}"
+							],
+							"path": [
+								"oauth",
+								"token"
+							],
+							"query": [
+								{
+									"key": "client_id",
+									"value": "order-service"
+								},
+								{
+									"key": "client_secret",
+									"value": "pwd-order-service"
+								},
+								{
+									"key": "grant_type",
+									"value": "authorization_code"
+								},
+								{
+									"key": "code",
+									"value": "6P8BcY"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://localhost:8082/oauth/authorized"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Oauth2 Check Token",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "pwd-parcel-delivery-service",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "parcel-delivery-service",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTQ4Mjg3MTMsInVzZXJfbmFtZSI6ImFobWVkdWxnZXJAZ21haWwuY29tIiwiYXV0aG9yaXRpZXMiOlsiU1RBTkRBUkQiLCJBRE1JTiJdLCJqdGkiOiI1MzdNUm51bEdEbmk0LXBMQmxzZkN4dHFzS0kiLCJjbGllbnRfaWQiOiJvcmRlci1zZXJ2aWNlIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl19.J8S-iMJI4avVE89BZ9Nf5xszhgqym9ahOLT7Bf4h6TO4UjRa-0CDrS_h5xWC2A4wTGCtJxM-lhTty725sLVkHpaW40oSTxex5bmofh8Xgu6Ft66zLnkj37tcJxLFnD7asHvaFt3HcbwmiVRGB9IxiYouEUWF6uKOmEEV8Qz1nfMD5kSHNBdk7AA60nLRRXPGADWO9udisqaE5Ii2EqPUFv9N4TCU78MvPVHIXq-dXFdatkoHW_fLnOn17D32CRAaipSkfxG0EESkGiA8TLDTSxf8tyFfw3BB9_rBQyadik9Ms7ZqlPs0g-DFfsTJp2bhlJI_YRNVGg8-2VW3hFjRdg",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTQ5OTQ0NTIsInVzZXJJZCI6MSwidXNlcl9uYW1lIjoiYWhtZWR1bGdlcjJAZ21haWwuY29tIiwianRpIjoicm5zaHppMFBYbVZRbEJqbGR3VzEzWDI3ZThBIiwiY2xpZW50X2lkIjoicGFyY2VsLWRlbGl2ZXJ5LXNlcnZpY2UiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXX0.jj2TNe8IGY6jNMoUZo1WG8nuw56nxy1iDMhseg1ccLPNavuswfO7Pd5AitYxttvtoYec32iKH-X0WdF-qOKXpy0ukwFtsZKZn9DSk9mKaTj6hgeO8Gvizyc3oxiYCLzembg6I7Jm72oLvVP47GoBHgbsfPO7PbnDGKzQM7RZVcdzOIZOxDFBqiFbYgCehQMt_KTgrnptCCm7E5oJ13HaC3RYG0j5RVZd1xnuTtNn1BcqXaF8CWsG1aKmFxSG9ALyXo5abSNSNHnwY5uG6vKoj1pb6pcscVgfD6IX5iGe7ITh-kV930q4cRWi1KQ9p5P8h4du_G9Qopdl8sM8-u_5_Q",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host-authentication-server}}/oauth/check_token",
+							"host": [
+								"{{host-authentication-server}}"
+							],
+							"path": [
+								"oauth",
+								"check_token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Infrastructure",
+			"item": [
+				{
+					"name": "Get Config",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host-config-server}}/parcel-delivery-service/default",
+							"host": [
+								"{{host-config-server}}"
+							],
+							"path": [
+								"parcel-delivery-service",
+								"default"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Registered Services",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host-eureka-server}}",
+							"host": [
+								"{{host-eureka-server}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host-apigw",
+			"value": "localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "host-eureka-server",
+			"value": "localhost:8761",
+			"type": "string"
+		},
+		{
+			"key": "host-config-server",
+			"value": "localhost:8888",
+			"type": "string"
+		},
+		{
+			"key": "host-authentication-server",
+			"value": "localhost:9090",
+			"type": "string"
+		},
+		{
+			"key": "host-parcel-delivery-service",
+			"value": "localhost7070",
+			"type": "string"
+		}
+	]
+}
