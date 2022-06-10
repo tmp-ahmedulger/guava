@@ -9,4 +9,6 @@ public interface ParcelManager {
     Optional<Parcel> findById(Long id);
 
     Parcel save(Parcel parcel);
+
+    void updateDeliveryAddress(long parcelId, String deliveryAddress);
 }

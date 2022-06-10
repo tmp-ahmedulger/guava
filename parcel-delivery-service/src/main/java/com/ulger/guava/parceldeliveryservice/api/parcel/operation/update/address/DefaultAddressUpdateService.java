@@ -4,16 +4,12 @@ import com.ulger.exception.ApiException;
 import com.ulger.guava.parceldeliveryservice.api.ApiReasonCode;
 import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
 import com.ulger.guava.parceldeliveryservice.api.parcel.data.ParcelManager;
-import com.ulger.guava.parceldeliveryservice.api.parcel.operation.OperationPermissionException;
-import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.permission.AddressUpdatePermissionCheckParams;
-import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.permission.AddressUpdatePermissionChecker;
+import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.allowance.AddressUpdatingPreConditionChecker;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.validation.AddressUpdateValidator;
 import com.ulger.validation.ValidationException;
 import com.ulger.validation.ValidationResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 
 @Slf4j
 @Service
@@ -21,16 +17,16 @@ public class DefaultAddressUpdateService implements AddressUpdateService {
 
     private final ParcelManager parcelManager;
     private final AddressUpdateValidator updateValidator;
-    private final AddressUpdatePermissionChecker permissionChecker;
+    private final AddressUpdatingPreConditionChecker updatingPreConditionChecker;
 
     public DefaultAddressUpdateService(
             ParcelManager parcelManager,
             AddressUpdateValidator updateValidator,
-            AddressUpdatePermissionChecker permissionChecker) {
+            AddressUpdatingPreConditionChecker updatingPreConditionChecker) {
 
         this.parcelManager = parcelManager;
         this.updateValidator = updateValidator;
-        this.permissionChecker = permissionChecker;
+        this.updatingPreConditionChecker = updatingPreConditionChecker;
     }
 
     @Override
@@ -45,32 +41,19 @@ public class DefaultAddressUpdateService implements AddressUpdateService {
 
         log.info("Parcel will being updated. parcelId={}, userId={}, deliveryAddress={}",
                 addressUpdateDto.getParcelId(),
-                addressUpdateDto.getUserId(),
+                addressUpdateDto.getUpdaterUserId(),
                 addressUpdateDto.getDeliveryAddress());
 
         Parcel existingParcel = parcelManager
                 .findById(addressUpdateDto.getParcelId())
                 .orElseThrow(() -> new ApiException(ApiReasonCode.PARCEL_NOT_FOUND.getCode()));
 
-        AddressUpdatePermissionCheckParams permissionCheckParams = new AddressUpdatePermissionCheckParams(
-                addressUpdateDto.getUserId(),
-                existingParcel.getUserId());
+        updatingPreConditionChecker.check(existingParcel, addressUpdateDto);
 
-        if (!permissionChecker.check(permissionCheckParams).isPermitted()) {
-            log.warn("Illegal parcel update operation detected. Parcel with id '{}' is attempted to update by userId={}. Parcel owner userId is '{}'",
-                    addressUpdateDto.getParcelId(),
-                    addressUpdateDto.getUserId(),
-                    existingParcel.getUserId());
+        log.info("Parcel pre-condition check for address updating is completed. Parcel address is being updated");
 
-            throw new OperationPermissionException(permissionCheckParams);
-        }
+        parcelManager.updateDeliveryAddress(addressUpdateDto.getParcelId(), addressUpdateDto.getDeliveryAddress());
 
-        if (Objects.equals(addressUpdateDto.getDeliveryAddress(), existingParcel.getDeliveryAddress())) {
-            log.info("Addresses are same, skipping update. SourceAddress={}, targetAddress={}",
-                    existingParcel.getDeliveryAddress(),
-                    addressUpdateDto.getDeliveryAddress());
-
-            throw new ApiException(ApiReasonCode.SAME_ADDRESS.getCode());
-        }
+        log.info("The address of Parcel with id '{}' has been updated", addressUpdateDto.getParcelId());
     }
 }

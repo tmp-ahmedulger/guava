@@ -33,4 +33,9 @@ public class DefaultParcelManager implements ParcelManager {
 
         return parcelEntityMapper.mapFromEntity(savedEntity);
     }
+
+    @Override
+    public void updateDeliveryAddress(long parcelId, String deliveryAddress) {
+
+    }
 }

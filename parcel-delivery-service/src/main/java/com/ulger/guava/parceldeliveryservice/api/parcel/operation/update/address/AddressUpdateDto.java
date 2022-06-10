@@ -2,14 +2,12 @@ package com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.addres
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 @Builder
 public class AddressUpdateDto {
 
     private Long parcelId;
-    private Long userId;
+    private Long updaterUserId;
     private String deliveryAddress;
 }

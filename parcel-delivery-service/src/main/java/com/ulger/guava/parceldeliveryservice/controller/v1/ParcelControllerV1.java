@@ -61,7 +61,7 @@ public class ParcelControllerV1 {
                 parcelId, userId, updateRequest.getDeliveryAddress());
 
         AddressUpdateDto addressUpdateDto = AddressUpdateDto.builder()
-                .userId(userId)
+                .updaterUserId(userId)
                 .parcelId(parcelId)
                 .deliveryAddress(updateRequest.getDeliveryAddress())
                 .build();

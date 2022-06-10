@@ -18,7 +18,7 @@ public class DefaultAddressUpdateValidator implements AddressUpdateValidator {
             return validationResult;
         }
 
-        if (addressUpdateDto.getUserId() == null) {
+        if (addressUpdateDto.getUpdaterUserId() == null) {
             validationResult.addError("User id is required");
         }
 
