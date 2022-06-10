@@ -1,6 +1,6 @@
 package com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.allowance;
 
-import com.ulger.exception.ApiException;
+import com.ulger.guava.parceldeliveryservice.api.ApiException;
 import com.ulger.guava.parceldeliveryservice.api.ApiReasonCode;
 import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.OperationPermissionException;
@@ -42,7 +42,7 @@ public class DefaultAddressUpdatingPreConditionChecker implements AddressUpdatin
                     existingParcel.getDeliveryAddress(),
                     addressUpdateDto.getDeliveryAddress());
 
-            throw new ApiException(ApiReasonCode.SAME_ADDRESS.getCode());
+            throw new ApiException(ApiReasonCode.SAME_ADDRESS.getKey());
         }
     }
 }
