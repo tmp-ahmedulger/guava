@@ -77,7 +77,6 @@ public class ParcelControllerV1 {
         return ResponseEntity.noContent().build();
     }
 
-
     @PreAuthorize("hasAuthority('COURIER') or hasAuthority('ADMIN')")
     @PutMapping("/{parcelId}/loading-status")
     public ResponseEntity<Void> updateLoadingStatus(

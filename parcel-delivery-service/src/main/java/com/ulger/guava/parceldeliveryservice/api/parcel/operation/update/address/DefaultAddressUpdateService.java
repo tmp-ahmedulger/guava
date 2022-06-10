@@ -1,6 +1,6 @@
 package com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address;
 
-import com.ulger.exception.ApiException;
+import com.ulger.guava.parceldeliveryservice.api.ApiException;
 import com.ulger.guava.parceldeliveryservice.api.ApiReasonCode;
 import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
 import com.ulger.guava.parceldeliveryservice.api.parcel.data.ParcelManager;
@@ -46,7 +46,7 @@ public class DefaultAddressUpdateService implements AddressUpdateService {
 
         Parcel existingParcel = parcelManager
                 .findById(addressUpdateDto.getParcelId())
-                .orElseThrow(() -> new ApiException(ApiReasonCode.PARCEL_NOT_FOUND.getCode()));
+                .orElseThrow(() -> new ApiException(ApiReasonCode.PARCEL_NOT_FOUND.getKey(), addressUpdateDto.getParcelId()));
 
         updatingPreConditionChecker.check(existingParcel, addressUpdateDto);
 

@@ -2,6 +2,7 @@ package com.ulger.guava.parceldeliveryservice.api.parcel.data;
 
 import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -35,6 +36,7 @@ public class DefaultParcelManager implements ParcelManager {
     }
 
     @Override
+    @Transactional
     public boolean updateDeliveryAddress(long parcelId, String deliveryAddress) {
         return parcelRepository.updateDeliveryAddress(parcelId, deliveryAddress) > 0;
     }
