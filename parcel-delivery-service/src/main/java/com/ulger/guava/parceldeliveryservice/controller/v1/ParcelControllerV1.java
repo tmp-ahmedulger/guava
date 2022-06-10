@@ -1,6 +1,7 @@
 package com.ulger.guava.parceldeliveryservice.controller.v1;
 
 import antlr.TokenStream;
+import com.ulger.guava.parceldeliveryservice.api.authentication.SecurityContextHelper;
 import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.creation.ParcelCreationDto;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.creation.ParcelCreationService;
@@ -40,11 +41,14 @@ public class ParcelControllerV1 {
     private TokenStore tokenStore;
 
     @PostMapping
-    public Parcel create(
-            OAuth2Authentication authentication,
-            @RequestBody ParcelCreationRequest parcelCreationRequest) {
+    public Parcel create(@RequestBody ParcelCreationRequest parcelCreationRequest) {
 
-        log.info("Parcel creation request has received, request={}, userId={}", parcelCreationRequest, "");
+        Long userId = SecurityContextHelper
+                .getAuthentication()
+                .get()
+                .getUserId();
+
+        log.info("Parcel creation request has received, request={}, userId={}", parcelCreationRequest, userId);
 
         ParcelCreationDto parcelCreationDto = defaultParcelCreationRequestMapper.map(parcelCreationRequest, 1L);
 
