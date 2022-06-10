@@ -8,4 +8,6 @@ import org.springframework.security.core.Authentication;
 public interface PDUserAuthentication extends Authentication {
 
     Long getUserId();
+
+    String getDisplayName();
 }

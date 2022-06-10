@@ -1,5 +1,6 @@
 package com.ulger.guava.parceldeliveryservice.api.authentication;
 
+import com.ulger.usermanager.api.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -7,17 +8,22 @@ import java.util.Collection;
 
 public class DefaultUserAuthentication implements PDUserAuthentication {
 
-	private final Long userId;
+	private final User user;
 	private final Authentication authentication;
 
-	public DefaultUserAuthentication(Long userId, Authentication authentication) {
-		this.userId = userId;
+	public DefaultUserAuthentication(User user, Authentication authentication) {
+		this.user = user;
 		this.authentication = authentication;
 	}
 
 	@Override
 	public Long getUserId() {
-		return userId;
+		return user.getId();
+	}
+
+	@Override
+	public String getDisplayName() {
+		return user.getDisplayName();
 	}
 
 	@Override
