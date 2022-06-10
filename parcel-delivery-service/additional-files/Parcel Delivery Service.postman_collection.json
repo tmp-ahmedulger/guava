@@ -10,43 +10,319 @@
 			"name": "API",
 			"item": [
 				{
-					"name": "Create Parcel",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhaG1lZHVsZ2VyMkBnbWFpbC5jb20iLCJkaXNwbGF5TmFtZSI6IkFobWV0IMOcbGdlciIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJleHAiOjE2NTUwNDYzNDgsInVzZXJJZCI6MSwianRpIjoib3diOW01WHJ6cXVybDYwQWZlN2VWX3dtOUg4IiwiY2xpZW50X2lkIjoicGFyY2VsLWRlbGl2ZXJ5LXNlcnZpY2UifQ.YXdxRXfCR-SwcaYuC5zVGA1OKBWbfY49LxBipXq0qPDIm7qbmF9BWeoMdUuleOk2MxnHOBPQQmmsRW-4xXwKIglRXhurmD4-m1hV4tQWCgBNBlzqJpc50pjBc8xq9fDxeHucXfED-l11VkckMPU67FxETw5aJNUj1-yMM1-KFlAzr8erHbpr39hQ8ejv1kJssnkzdBcyRz0aEPptF6afS5O7eOaJtKVr7yaHtTkySarKxxxeT4t0xNaIhTPNu2HDdcXbF8bRqExvhLw2nHVrtHTXOkz5Z-Fho5hZ2BWCxjXhb9D7a9PNFaIkaqWuAhUYBgDgyKc6HObdJik6feVW2w",
-									"type": "string"
+					"name": "Parcel",
+					"item": [
+						{
+							"name": "Update Parcel Address",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"deliveryAddress\": \"Address v2\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-parcel-delivery-service}}/rest/api/v1/parcel/:parcelId/address",
+									"host": [
+										"{{host-parcel-delivery-service}}"
+									],
+									"path": [
+										"rest",
+										"api",
+										"v1",
+										"parcel",
+										":parcelId",
+										"address"
+									],
+									"variable": [
+										{
+											"key": "parcelId",
+											"value": null
+										}
+									]
 								}
-							]
+							},
+							"response": []
 						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"weightInGrams\": 100,\n    \"deliveryAddress\": \"Address v1\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+						{
+							"name": "Create Parcel",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhaG1lZHVsZ2VyMkBnbWFpbC5jb20iLCJkaXNwbGF5TmFtZSI6IkFobWV0IMOcbGdlciIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJleHAiOjE2NTUwNDYzNDgsInVzZXJJZCI6MSwianRpIjoib3diOW01WHJ6cXVybDYwQWZlN2VWX3dtOUg4IiwiY2xpZW50X2lkIjoicGFyY2VsLWRlbGl2ZXJ5LXNlcnZpY2UifQ.YXdxRXfCR-SwcaYuC5zVGA1OKBWbfY49LxBipXq0qPDIm7qbmF9BWeoMdUuleOk2MxnHOBPQQmmsRW-4xXwKIglRXhurmD4-m1hV4tQWCgBNBlzqJpc50pjBc8xq9fDxeHucXfED-l11VkckMPU67FxETw5aJNUj1-yMM1-KFlAzr8erHbpr39hQ8ejv1kJssnkzdBcyRz0aEPptF6afS5O7eOaJtKVr7yaHtTkySarKxxxeT4t0xNaIhTPNu2HDdcXbF8bRqExvhLw2nHVrtHTXOkz5Z-Fho5hZ2BWCxjXhb9D7a9PNFaIkaqWuAhUYBgDgyKc6HObdJik6feVW2w",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"weightInGrams\": 100,\n    \"deliveryAddress\": \"Address v1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-parcel-delivery-service}}/rest/api/v1/parcel",
+									"host": [
+										"{{host-parcel-delivery-service}}"
+									],
+									"path": [
+										"rest",
+										"api",
+										"v1",
+										"parcel"
+									]
 								}
-							}
+							},
+							"response": []
 						},
-						"url": {
-							"raw": "{{host-parcel-delivery-service}}/rest/api/v1/parcel",
-							"host": [
-								"{{host-parcel-delivery-service}}"
-							],
-							"path": [
-								"rest",
-								"api",
-								"v1",
-								"parcel"
-							]
+						{
+							"name": "Update Parcel Status",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"loadingStatus\": \"Address v2\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-parcel-delivery-service}}/rest/api/v1/parcel/:parcelId/loading-status",
+									"host": [
+										"{{host-parcel-delivery-service}}"
+									],
+									"path": [
+										"rest",
+										"api",
+										"v1",
+										"parcel",
+										":parcelId",
+										"loading-status"
+									],
+									"variable": [
+										{
+											"key": "parcelId",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cancel Parcel",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{host-parcel-delivery-service}}/rest/api/v1/parcel/:parcelId/cancel",
+									"host": [
+										"{{host-parcel-delivery-service}}"
+									],
+									"path": [
+										"rest",
+										"api",
+										"v1",
+										"parcel",
+										":parcelId",
+										"cancel"
+									],
+									"variable": [
+										{
+											"key": "parcelId",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Parcels",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host-parcel-delivery-service}}/rest/api/v1/parcels?userId=1",
+									"host": [
+										"{{host-parcel-delivery-service}}"
+									],
+									"path": [
+										"rest",
+										"api",
+										"v1",
+										"parcels"
+									],
+									"query": [
+										{
+											"key": "userId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Pacel",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host-parcel-delivery-service}}/rest/api/v1/parcel/:parcelId",
+									"host": [
+										"{{host-parcel-delivery-service}}"
+									],
+									"path": [
+										"rest",
+										"api",
+										"v1",
+										"parcel",
+										":parcelId"
+									],
+									"variable": [
+										{
+											"key": "parcelId",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Assign Parcel To Courier",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"courierId\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-parcel-delivery-service}}/restt/api/v1/:parcelId/assign",
+									"host": [
+										"{{host-parcel-delivery-service}}"
+									],
+									"path": [
+										"restt",
+										"api",
+										"v1",
+										":parcelId",
+										"assign"
+									],
+									"variable": [
+										{
+											"key": "parcelId",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get User Parcels",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
+				},
+				{
+					"name": "Courier",
+					"item": [
+						{
+							"name": "Get Couriers",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"loadingStatus\": \"Address v2\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-parcel-delivery-service}}/rest/api/v1/couriers",
+									"host": [
+										"{{host-parcel-delivery-service}}"
+									],
+									"path": [
+										"rest",
+										"api",
+										"v1",
+										"couriers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Courier",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"test@ulger.com\",\n    \"displayName\": \"Yüküm Ağır\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-parcel-delivery-service}}/rest/api/v1/courier",
+									"host": [
+										"{{host-parcel-delivery-service}}"
+									],
+									"path": [
+										"rest",
+										"api",
+										"v1",
+										"courier"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				},
 				{
 					"name": "Create User",
@@ -57,24 +333,13 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "email",
-									"value": "ahmedulger@gmail.com",
-									"type": "text"
-								},
-								{
-									"key": "displayName",
-									"value": "Ahmet Ülger",
-									"type": "text"
-								},
-								{
-									"key": "rawPassword",
-									"value": "q1",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"ahmedulger@gmail.com\",\n    \"displayName\": \"Ahmet Ülger\",\n    \"rawPassword\": \"q1\",\n    \"roleIds\": [1, 2]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
 							"raw": "{{host-authentication-server}}/rest/api/v1/user",
@@ -86,78 +351,6 @@
 								"api",
 								"v1",
 								"user"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Parcel Address",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"deliveryAddress\": \"Address v2\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{host-parcel-delivery-service}}/:parcelId/address",
-							"host": [
-								"{{host-parcel-delivery-service}}"
-							],
-							"path": [
-								":parcelId",
-								"address"
-							],
-							"variable": [
-								{
-									"key": "parcelId",
-									"value": null
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Parcel Status",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"loadingStatus\": \"Address v2\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{host-parcel-delivery-service}}/:parcelId/loading-status",
-							"host": [
-								"{{host-parcel-delivery-service}}"
-							],
-							"path": [
-								":parcelId",
-								"loading-status"
-							],
-							"variable": [
-								{
-									"key": "parcelId",
-									"value": null
-								}
 							]
 						}
 					},
