@@ -13,6 +13,7 @@ import com.ulger.guava.parceldeliveryservice.controller.v1.request.update.Parcel
 import com.ulger.guava.parceldeliveryservice.controller.v1.request.update.ParcelLoadingStatusUpdateRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -48,6 +49,7 @@ public class ParcelControllerV1 {
         return parcelCreationService.create(parcelCreationDto);
     }
 
+    @PreAuthorize("hasAuthority('STANDARD') or hasAuthority('ADMIN')")
     @PutMapping("/{parcelId}/address")
     public ResponseEntity<Void> updateAddress(
             @RequestBody ParcelAddressUpdateRequest updateRequest,
@@ -69,6 +71,8 @@ public class ParcelControllerV1 {
         return ResponseEntity.noContent().build();
     }
 
+
+    @PreAuthorize("hasAuthority('COURIER') or hasAuthority('ADMIN')")
     @PutMapping("/{parcelId}/loading-status")
     public ResponseEntity<Void> updateLoadingStatus(
             @RequestBody ParcelLoadingStatusUpdateRequest updateRequest,

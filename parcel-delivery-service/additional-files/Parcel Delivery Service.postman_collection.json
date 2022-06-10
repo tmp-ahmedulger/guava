@@ -13,46 +13,6 @@
 					"name": "Parcel",
 					"item": [
 						{
-							"name": "Update Parcel Address",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"deliveryAddress\": \"Address v2\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{host-parcel-delivery-service}}/rest/api/v1/parcel/:parcelId/address",
-									"host": [
-										"{{host-parcel-delivery-service}}"
-									],
-									"path": [
-										"rest",
-										"api",
-										"v1",
-										"parcel",
-										":parcelId",
-										"address"
-									],
-									"variable": [
-										{
-											"key": "parcelId",
-											"value": null
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "Create Parcel",
 							"request": {
 								"auth": {
@@ -60,7 +20,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhaG1lZHVsZ2VyMkBnbWFpbC5jb20iLCJkaXNwbGF5TmFtZSI6IkFobWV0IMOcbGdlciIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSJdLCJleHAiOjE2NTUwNDYzNDgsInVzZXJJZCI6MSwianRpIjoib3diOW01WHJ6cXVybDYwQWZlN2VWX3dtOUg4IiwiY2xpZW50X2lkIjoicGFyY2VsLWRlbGl2ZXJ5LXNlcnZpY2UifQ.YXdxRXfCR-SwcaYuC5zVGA1OKBWbfY49LxBipXq0qPDIm7qbmF9BWeoMdUuleOk2MxnHOBPQQmmsRW-4xXwKIglRXhurmD4-m1hV4tQWCgBNBlzqJpc50pjBc8xq9fDxeHucXfED-l11VkckMPU67FxETw5aJNUj1-yMM1-KFlAzr8erHbpr39hQ8ejv1kJssnkzdBcyRz0aEPptF6afS5O7eOaJtKVr7yaHtTkySarKxxxeT4t0xNaIhTPNu2HDdcXbF8bRqExvhLw2nHVrtHTXOkz5Z-Fho5hZ2BWCxjXhb9D7a9PNFaIkaqWuAhUYBgDgyKc6HObdJik6feVW2w",
+											"value": "{{auth.jwt}}",
 											"type": "string"
 										}
 									]
@@ -92,24 +52,12 @@
 							"response": []
 						},
 						{
-							"name": "Update Parcel Status",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
+							"name": "Get Pacel",
 							"request": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"loadingStatus\": \"Address v2\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
 								"url": {
-									"raw": "{{host-parcel-delivery-service}}/rest/api/v1/parcel/:parcelId/loading-status",
+									"raw": "{{host-parcel-delivery-service}}/rest/api/v1/parcel/:parcelId",
 									"host": [
 										"{{host-parcel-delivery-service}}"
 									],
@@ -118,36 +66,7 @@
 										"api",
 										"v1",
 										"parcel",
-										":parcelId",
-										"loading-status"
-									],
-									"variable": [
-										{
-											"key": "parcelId",
-											"value": null
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Cancel Parcel",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"url": {
-									"raw": "{{host-parcel-delivery-service}}/rest/api/v1/parcel/:parcelId/cancel",
-									"host": [
-										"{{host-parcel-delivery-service}}"
-									],
-									"path": [
-										"rest",
-										"api",
-										"v1",
-										"parcel",
-										":parcelId",
-										"cancel"
+										":parcelId"
 									],
 									"variable": [
 										{
@@ -186,12 +105,50 @@
 							"response": []
 						},
 						{
-							"name": "Get Pacel",
+							"name": "Get User Parcels",
 							"request": {
 								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Update Parcel Address",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"console.log(pm.collectionVariables.get(\"auth.jwt\"));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{auth.jwt}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
 								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"deliveryAddress\": \"Address v2\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
-									"raw": "{{host-parcel-delivery-service}}/rest/api/v1/parcel/:parcelId",
+									"raw": "{{host-parcel-delivery-service}}/rest/api/v1/parcel/:parcelId/address",
 									"host": [
 										"{{host-parcel-delivery-service}}"
 									],
@@ -200,7 +157,55 @@
 										"api",
 										"v1",
 										"parcel",
-										":parcelId"
+										":parcelId",
+										"address"
+									],
+									"variable": [
+										{
+											"key": "parcelId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Parcel Status",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{auth.jwt}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"loadingStatus\": \"Address v2\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host-parcel-delivery-service}}/rest/api/v1/parcel/:parcelId/loading-status",
+									"host": [
+										"{{host-parcel-delivery-service}}"
+									],
+									"path": [
+										"rest",
+										"api",
+										"v1",
+										"parcel",
+										":parcelId",
+										"loading-status"
 									],
 									"variable": [
 										{
@@ -249,10 +254,30 @@
 							"response": []
 						},
 						{
-							"name": "Get User Parcels",
+							"name": "Cancel Parcel",
 							"request": {
-								"method": "GET",
-								"header": []
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{host-parcel-delivery-service}}/rest/api/v1/parcel/:parcelId/cancel",
+									"host": [
+										"{{host-parcel-delivery-service}}"
+									],
+									"path": [
+										"rest",
+										"api",
+										"v1",
+										"parcel",
+										":parcelId",
+										"cancel"
+									],
+									"variable": [
+										{
+											"key": "parcelId",
+											"value": null
+										}
+									]
+								}
 							},
 							"response": []
 						}
@@ -369,7 +394,7 @@
 							"script": {
 								"exec": [
 									"var jsonData = JSON.parse(responseBody);\r",
-									"postman.setEnvironmentVariable(\"token\", jsonData.access_token);"
+									"pm.collectionVariables.set(\"auth.jwt\", jsonData.access_token);"
 								],
 								"type": "text/javascript"
 							}
@@ -407,42 +432,6 @@
 								{
 									"key": "client_secret",
 									"value": "pwd-parcel-delivery-service"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Oauth2 Code",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{host-authentication-server}}/oauth/authorize?client_id=order-service&response_type=code&redirect_uri=http://localhost:8082/oauth/authorized&scope=read",
-							"host": [
-								"{{host-authentication-server}}"
-							],
-							"path": [
-								"oauth",
-								"authorize"
-							],
-							"query": [
-								{
-									"key": "client_id",
-									"value": "order-service"
-								},
-								{
-									"key": "response_type",
-									"value": "code"
-								},
-								{
-									"key": "redirect_uri",
-									"value": "http://localhost:8082/oauth/authorized"
-								},
-								{
-									"key": "scope",
-									"value": "read"
 								}
 							]
 						}
@@ -542,6 +531,42 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Oauth2 Code",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host-authentication-server}}/oauth/authorize?client_id=order-service&response_type=code&redirect_uri=http://localhost:8082/oauth/authorized&scope=read",
+							"host": [
+								"{{host-authentication-server}}"
+							],
+							"path": [
+								"oauth",
+								"authorize"
+							],
+							"query": [
+								{
+									"key": "client_id",
+									"value": "order-service"
+								},
+								{
+									"key": "response_type",
+									"value": "code"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://localhost:8082/oauth/authorized"
+								},
+								{
+									"key": "scope",
+									"value": "read"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -626,7 +651,12 @@
 		},
 		{
 			"key": "host-parcel-delivery-service",
-			"value": "localhost7070",
+			"value": "localhost:7070",
+			"type": "string"
+		},
+		{
+			"key": "auth.jwt",
+			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhaG1lZHVsZ2VyQGdtYWlsLmNvbSIsImRpc3BsYXlOYW1lIjoiQWhtZXQgw5xsZ2VyIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sImV4cCI6MTY1NTA4NTUxNSwidXNlcklkIjoxLCJhdXRob3JpdGllcyI6WyJTVEFOREFSRCIsIkFETUlOIl0sImp0aSI6IlBWSnRTNGEyMWNUWGE2cUhzV1hPYlN3V0UzdyIsImNsaWVudF9pZCI6InBhcmNlbC1kZWxpdmVyeS1zZXJ2aWNlIn0.OLksCl-p8V0FdF225YvWQwj4nefyFvjlHUGubRTfmwHZj89q2phSQFUVOkrhfypa33aNASjZLvESKzZrgk2_o4KBBge-C-Vu-pJPQx6BMk7WBorq8SM390AHMTtkbJcbz-1APQFJt_gJ-2buLcxDZuOYpeOlZ89V6M8J55OWmkrV5V92MjJCnxZwq10CxqQ9nakZ3RXPUP8eVhRAw8AFlMkBhzCHGqfRabzCWq_71gnWFNAM0QDOZgk0CXYDceH_t7c_n1dC-NBMSHsU4uHoYRU-mkexzJFJ349HvIxfqRizFuvUKFr2fK-W4fiW1pQjSGWlKqjZnek7j5NuuvNaWA",
 			"type": "string"
 		}
 	]
