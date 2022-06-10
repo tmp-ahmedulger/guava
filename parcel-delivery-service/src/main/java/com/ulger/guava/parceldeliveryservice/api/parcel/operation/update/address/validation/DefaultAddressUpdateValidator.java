@@ -1,28 +1,28 @@
 package com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.validation;
 
-import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.ParcelAddressUpdateDto;
+import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.AddressUpdateDto;
 import com.ulger.validation.ValidationResult;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DefaultAddressParcelUpdateValidator implements ParcelAddressUpdateValidator {
+public class DefaultAddressUpdateValidator implements AddressUpdateValidator {
 
     @Override
-    public ValidationResult validate(ParcelAddressUpdateDto parcelAddressUpdateDto) {
+    public ValidationResult validate(AddressUpdateDto addressUpdateDto) {
 
         ValidationResult validationResult = new ValidationResult();
 
-        if (parcelAddressUpdateDto == null) {
+        if (addressUpdateDto == null) {
             validationResult.addError("Parcel address update data is required");
             return validationResult;
         }
 
-        if (parcelAddressUpdateDto.getUserId() == null) {
+        if (addressUpdateDto.getUserId() == null) {
             validationResult.addError("User id is required");
         }
 
-        if (StringUtils.isBlank(parcelAddressUpdateDto.getDeliveryAddress())) {
+        if (StringUtils.isBlank(addressUpdateDto.getDeliveryAddress())) {
             validationResult.addError("Package delivery address is needed");
         }
 

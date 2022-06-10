@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class ParcelAddressUpdateDto {
+public class AddressUpdateDto {
 
     private Long parcelId;
     private Long userId;

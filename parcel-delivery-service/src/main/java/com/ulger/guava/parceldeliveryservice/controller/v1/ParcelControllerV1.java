@@ -4,9 +4,9 @@ import com.ulger.guava.parceldeliveryservice.authentication.SecurityContextHelpe
 import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.creation.ParcelCreationDto;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.creation.ParcelCreationService;
-import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.ParcelAddressUpdateDto;
-import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.ParcelAddressUpdateService;
-import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status.ParcelLoadingStatusUpdateService;
+import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.AddressUpdateDto;
+import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.AddressUpdateService;
+import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status.LoadingStatusUpdateService;
 import com.ulger.guava.parceldeliveryservice.controller.v1.request.creation.ParcelCreationRequest;
 import com.ulger.guava.parceldeliveryservice.controller.v1.request.creation.ParcelCreationRequestMapper;
 import com.ulger.guava.parceldeliveryservice.controller.v1.request.update.ParcelAddressUpdateRequest;
@@ -22,19 +22,19 @@ import org.springframework.web.bind.annotation.*;
 public class ParcelControllerV1 {
 
     private final ParcelCreationService parcelCreationService;
-    private final ParcelAddressUpdateService parcelAddressUpdateService;
-    private final ParcelLoadingStatusUpdateService parcelLoadingStatusUpdateService;
+    private final AddressUpdateService addressUpdateService;
+    private final LoadingStatusUpdateService loadingStatusUpdateService;
     private final ParcelCreationRequestMapper defaultParcelCreationRequestMapper;
 
     public ParcelControllerV1(
             ParcelCreationService parcelCreationService,
-            ParcelAddressUpdateService parcelAddressUpdateService,
-            ParcelLoadingStatusUpdateService parcelLoadingStatusUpdateService,
+            AddressUpdateService addressUpdateService,
+            LoadingStatusUpdateService loadingStatusUpdateService,
             ParcelCreationRequestMapper defaultParcelCreationRequestMapper) {
 
         this.parcelCreationService = parcelCreationService;
-        this.parcelAddressUpdateService = parcelAddressUpdateService;
-        this.parcelLoadingStatusUpdateService = parcelLoadingStatusUpdateService;
+        this.addressUpdateService = addressUpdateService;
+        this.loadingStatusUpdateService = loadingStatusUpdateService;
         this.defaultParcelCreationRequestMapper = defaultParcelCreationRequestMapper;
     }
 
@@ -60,13 +60,13 @@ public class ParcelControllerV1 {
         log.info("Parcel address update request received, parcelId={}, userId={}, address={}",
                 parcelId, userId, updateRequest.getDeliveryAddress());
 
-        ParcelAddressUpdateDto addressUpdateDto = ParcelAddressUpdateDto.builder()
+        AddressUpdateDto addressUpdateDto = AddressUpdateDto.builder()
                 .userId(userId)
                 .parcelId(parcelId)
                 .deliveryAddress(updateRequest.getDeliveryAddress())
                 .build();
 
-        parcelAddressUpdateService.update(addressUpdateDto);
+        addressUpdateService.update(addressUpdateDto);
 
         return ResponseEntity.noContent().build();
     }
@@ -83,7 +83,7 @@ public class ParcelControllerV1 {
         log.info("Parcel status update request received, parcelId={}, userId={}, status={}",
                 parcelId, userId, updateRequest.getLoadingStatus());
 
-        parcelLoadingStatusUpdateService.update(parcelId, userId, updateRequest.getLoadingStatus());
+        loadingStatusUpdateService.update(parcelId, userId, updateRequest.getLoadingStatus());
 
         return ResponseEntity.noContent().build();
     }
