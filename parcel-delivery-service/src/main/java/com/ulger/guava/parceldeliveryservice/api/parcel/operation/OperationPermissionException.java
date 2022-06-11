@@ -6,6 +6,10 @@ public class OperationPermissionException extends RuntimeException {
 
     private final PermissionCheckParams permissionCheckParams;
 
+    public PermissionCheckParams getPermissionCheckParams() {
+        return permissionCheckParams;
+    }
+
     public OperationPermissionException(PermissionCheckParams permissionCheckParams) {
         this.permissionCheckParams = permissionCheckParams;
     }

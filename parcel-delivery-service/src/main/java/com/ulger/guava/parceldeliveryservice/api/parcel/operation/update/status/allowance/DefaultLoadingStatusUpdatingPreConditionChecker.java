@@ -1,7 +1,7 @@
 package com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status.allowance;
 
 import com.ulger.guava.parceldeliveryservice.api.ApiException;
-import com.ulger.guava.parceldeliveryservice.api.ApiReasonCode;
+import com.ulger.guava.parceldeliveryservice.api.ApiErrorCode;
 import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.OperationPermissionException;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status.LoadingStatusUpdateDto;
@@ -42,7 +42,7 @@ public class DefaultLoadingStatusUpdatingPreConditionChecker implements LoadingS
                     existingParcel.getLoadingStatus(),
                     loadingStatusUpdateDto.getLoadingStatus());
 
-            throw new ApiException(ApiReasonCode.SAME_LOADING_STATUS.getKey());
+            throw new ApiException(ApiErrorCode.SAME_LOADING_STATUS.getKey());
         }
     }
 }

@@ -1,9 +1,9 @@
 package com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.allowance;
 
-import com.ulger.guava.parceldeliveryservice.api.ApiException;
-import com.ulger.guava.parceldeliveryservice.api.ApiReasonCode;
+import com.ulger.guava.parceldeliveryservice.api.ApiErrorCode;
 import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.OperationPermissionException;
+import com.ulger.guava.parceldeliveryservice.api.parcel.operation.PreConditionException;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.AddressUpdateDto;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.permission.AddressUpdatePermissionCheckParams;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.permission.AddressUpdatePermissionChecker;
@@ -34,7 +34,7 @@ public class DefaultAddressUpdatingPreConditionChecker implements AddressUpdatin
                     addressUpdateDto.getUpdaterUserId(),
                     existingParcel.getOwnerUserId());
 
-            throw new OperationPermissionException(permissionCheckParams);
+            throw new PreConditionException(new OperationPermissionException(permissionCheckParams));
         }
 
         if (Objects.equals(addressUpdateDto.getDeliveryAddress(), existingParcel.getDeliveryAddress())) {
@@ -42,7 +42,7 @@ public class DefaultAddressUpdatingPreConditionChecker implements AddressUpdatin
                     existingParcel.getDeliveryAddress(),
                     addressUpdateDto.getDeliveryAddress());
 
-            throw new ApiException(ApiReasonCode.SAME_ADDRESS.getKey());
+            throw new PreConditionException(ApiErrorCode.SAME_ADDRESS.getKey());
         }
     }
 }

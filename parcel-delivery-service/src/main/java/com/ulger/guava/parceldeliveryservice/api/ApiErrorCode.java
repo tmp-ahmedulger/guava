@@ -1,6 +1,6 @@
 package com.ulger.guava.parceldeliveryservice.api;
 
-public enum ApiReasonCode {
+public enum ApiErrorCode {
 
     SAME_ADDRESS(1, "error.parcel.address.same"),
     PARCEL_NOT_FOUND(2, "error.parcel.not-found"),
@@ -9,7 +9,7 @@ public enum ApiReasonCode {
     private final int code;
     private final String key;
 
-    ApiReasonCode(int code, String key) {
+    ApiErrorCode(int code, String key) {
         this.code = code;
         this.key = key;
     }
