@@ -29,7 +29,7 @@ public class DefaultAddressUpdatePermissionChecker implements AddressUpdatePermi
 
         User user = userLoader.loadById(params.getAttemptingUserId());
 
-        if (user != null && user.getRoles().contains(PreDefinedRole.ADMIN.getRole())) {
+        if (user != null && user.hasRole(PreDefinedRole.ADMIN.getRole().getName())) {
             return DefaultPermissionResult.buildPermitted();
         }
 

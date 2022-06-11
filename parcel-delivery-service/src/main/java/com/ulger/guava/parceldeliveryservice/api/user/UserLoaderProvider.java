@@ -2,15 +2,11 @@ package com.ulger.guava.parceldeliveryservice.api.user;
 
 import com.ulger.guava.parceldeliveryservice.infrastructure.authentication.User;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
 import java.util.List;
 
 @Slf4j
-@Component
-@Qualifier("userLoaderProvider")
 public class UserLoaderProvider implements UserLoader {
 
     private final List<UserLoader> userLoaders;
@@ -38,5 +34,9 @@ public class UserLoaderProvider implements UserLoader {
         }
 
         return null;
+    }
+
+    public void addUserLoaderProvider(UserLoader userLoader) {
+        this.userLoaders.add(userLoader);
     }
 }

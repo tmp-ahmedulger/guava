@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-@Qualifier("inMemoryUserLoader")
+@Qualifier("securityContextUserLoader")
 public class SecurityContextUserLoader implements UserLoader {
 
     @Override

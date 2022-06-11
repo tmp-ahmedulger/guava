@@ -2,6 +2,8 @@ package com.ulger.guava.parceldeliveryservice.infrastructure.authentication;
 
 import lombok.Builder;
 
+import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 
 @Builder
@@ -30,5 +32,14 @@ public class PDUser implements User {
     @Override
     public Set<Role> getRoles() {
         return roles;
+    }
+
+    @Override
+    public boolean hasRole(String roleName) {
+        return Optional
+                .ofNullable(roles)
+                .orElse(Collections.emptySet())
+                .stream()
+                .anyMatch(role -> role.getName().equals(roleName));
     }
 }
