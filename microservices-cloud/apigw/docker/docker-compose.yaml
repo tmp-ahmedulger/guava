@@ -7,11 +7,11 @@ services:
     container_name: apigw
     build:
       context: ..
-      dockerfile: Dockerfile
+      dockerfile: ./docker/Dockerfile
     ports:
       - "8080:8080"
     restart: on-failure
     environment:
       SPRING_PROFILES_ACTIVE: default
-      SPRING_CLOUD_CONFIG_SERVER_GIT_URI: configserver:http://host.docker.internal:8888
+      spring.config.import: configserver:http://host.docker.internal:8888
       eureka.client.serviceUrl.defaultZone: http://host.docker.internal:8761/eureka

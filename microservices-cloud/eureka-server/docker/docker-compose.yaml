@@ -7,7 +7,7 @@ services:
     container_name: eureka-server
     build:
       context: ..
-      dockerfile: Dockerfile
+      dockerfile: ./docker/Dockerfile
     ports:
       - "8761:8761"
     restart: on-failure
