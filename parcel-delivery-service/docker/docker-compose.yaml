@@ -23,12 +23,11 @@ services:
     ports:
       - "7070:7070"
     restart: "no"
-    depends_on:
-      - database-postgres
     environment:
       SPRING_PROFILES_ACTIVE: default
       SPRING_DATASOURCE_USERNAME: admin
       SPRING_DATASOURCE_PASSWORD: asd123
       SPRING_DATASOURCE_URL: jdbc:postgresql://database-postgres:5432/parcel-delivery-service?createDatabaseIfNotExist=true
       spring.config.import: configserver:http://host.docker.internal:8888
+      spring.cloud.config.server.git.uri: configserver:http://host.docker.internal:8888
       eureka.client.serviceUrl.defaultZone: http://host.docker.internal:8761/eureka
