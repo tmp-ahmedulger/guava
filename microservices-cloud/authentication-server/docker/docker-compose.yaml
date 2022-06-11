@@ -18,12 +18,12 @@ services:
     image: authentication-server:1.0
     container_name: authentication-server
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: ./docker/Dockerfile
     ports:
       - "9090:9090"
     restart: on-failure
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://database-postgres:5432/ty?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://database-postgres:5432/authentication-server?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: admin
       SPRING_DATASOURCE_PASSWORD: asd123
