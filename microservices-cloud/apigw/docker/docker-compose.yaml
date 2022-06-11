@@ -2,7 +2,7 @@ version: '3'
 
 services:
   #service 1: APIGW Service Information
-  eureka-server:
+  apigw:
     image: apigw:1.0
     container_name: apigw
     build:
@@ -11,3 +11,7 @@ services:
     ports:
       - "8080:8080"
     restart: on-failure
+    environment:
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CLOUD_CONFIG_SERVER_GIT_URI: configserver:http://host.docker.internal:8888
+      eureka.client.serviceUrl.defaultZone: http://host.docker.internal:8761/eureka
