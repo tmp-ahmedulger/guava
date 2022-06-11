@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  #service 1: Parcel-Delivery Service Information
+  eureka-server:
+    image: parcel-delivery-service:1.0
+    container_name: parcel-delivery-service
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    ports:
+      - "7070:7070"
+    restart: on-failure
