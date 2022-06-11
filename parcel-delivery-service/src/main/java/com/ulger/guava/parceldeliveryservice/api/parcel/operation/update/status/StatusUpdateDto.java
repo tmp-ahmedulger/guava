@@ -1,5 +1,6 @@
 package com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status;
 
+import com.ulger.guava.parceldeliveryservice.api.parcel.Status;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -9,5 +10,9 @@ public class StatusUpdateDto {
 
     private Long parcelId;
     private Long updaterUserId;
-    private String status;
+    private Integer statusCode;
+
+    public Status getStatus() {
+        return Status.findByCode(statusCode).orElse(null);
+    }
 }

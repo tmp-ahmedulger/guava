@@ -1,12 +1,13 @@
 package com.ulger.guava.parceldeliveryservice.infrastructure.controller.v1;
 
-import com.ulger.guava.parceldeliveryservice.infrastructure.authentication.SecurityContextHelper;
 import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.creation.ParcelCreationDto;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.creation.ParcelCreationService;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.AddressUpdateDto;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.AddressUpdateService;
+import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status.StatusUpdateDto;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status.StatusUpdateService;
+import com.ulger.guava.parceldeliveryservice.infrastructure.authentication.SecurityContextHelper;
 import com.ulger.guava.parceldeliveryservice.infrastructure.controller.v1.request.creation.ParcelCreationRequest;
 import com.ulger.guava.parceldeliveryservice.infrastructure.controller.v1.request.creation.ParcelCreationRequestMapper;
 import com.ulger.guava.parceldeliveryservice.infrastructure.controller.v1.request.update.ParcelAddressUpdateRequest;
@@ -71,7 +72,7 @@ public class ParcelControllerV1 {
         if (!isUpdated) {
             return ResponseEntity
                     .internalServerError()
-                    .body("Parcel address can not updated. Check administrators");
+                    .body("Parcel address can not updated. Contact with administrators");
         }
 
         return ResponseEntity.noContent().build();
@@ -79,16 +80,28 @@ public class ParcelControllerV1 {
 
     @PreAuthorize("hasAuthority('COURIER') or hasAuthority('ADMIN')")
     @PutMapping("/{parcelId}/status")
-    public ResponseEntity<Void> updateStatus(
+    public ResponseEntity<?> updateStatus(
             @RequestBody ParcelStatusUpdateRequest updateRequest,
             @PathVariable("parcelId") Long parcelId) {
 
         Long userId = SecurityContextHelper.getAuthenticated().getUserId();
 
-        log.info("Parcel status update request received, parcelId={}, userId={}, status={}",
-                parcelId, userId, updateRequest.getStatus());
+        log.info("Parcel status update request received, parcelId={}, userId={}, statusCode={}",
+                parcelId, userId, updateRequest.getStatusCode());
 
-        statusUpdateService.update(parcelId, userId, updateRequest.getStatus());
+        StatusUpdateDto statusUpdateDto = StatusUpdateDto.builder()
+                .updaterUserId(userId)
+                .parcelId(parcelId)
+                .statusCode(updateRequest.getStatusCode())
+                .build();
+
+        boolean isUpdated = statusUpdateService.update(statusUpdateDto);
+
+        if (!isUpdated) {
+            return ResponseEntity
+                    .internalServerError()
+                    .body("Parcel status can not updated. Contact with administrators");
+        }
 
         return ResponseEntity.noContent().build();
     }

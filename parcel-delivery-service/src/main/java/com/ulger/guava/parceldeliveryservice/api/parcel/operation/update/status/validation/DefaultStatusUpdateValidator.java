@@ -1,8 +1,8 @@
 package com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status.validation;
 
+import com.ulger.guava.parceldeliveryservice.api.parcel.Status;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status.StatusUpdateDto;
 import com.ulger.validation.ValidationResult;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,8 +22,10 @@ public class DefaultStatusUpdateValidator implements StatusUpdateValidator {
             validationResult.addError("User id is required");
         }
 
-        if (StringUtils.isBlank(statusUpdateDto.getStatus())) {
+        if (statusUpdateDto.getStatusCode() == null) {
             validationResult.addError("Status is required");
+        } else if (Status.findByCode(statusUpdateDto.getStatusCode()).isEmpty()) {
+            validationResult.addError("Unknown status");
         }
 
         return validationResult;

@@ -1,8 +1,8 @@
 package com.ulger.guava.parceldeliveryservice.api.parcel.operation.creation;
 
-import com.ulger.guava.parceldeliveryservice.api.parcel.Status;
 import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
 import com.ulger.guava.parceldeliveryservice.api.parcel.ParcelOperationException;
+import com.ulger.guava.parceldeliveryservice.api.parcel.Status;
 
 /**
  * This interface defines creation operations of parcels.

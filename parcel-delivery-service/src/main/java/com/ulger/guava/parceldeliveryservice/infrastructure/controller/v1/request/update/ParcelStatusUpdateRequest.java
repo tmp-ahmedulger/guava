@@ -6,14 +6,14 @@ import lombok.ToString;
 @ToString
 public class ParcelStatusUpdateRequest {
 
-    private String status;
+    private Integer statusCode;
 
-    public String getStatus() {
-        return status;
+    public Integer getStatusCode() {
+        return statusCode;
     }
 
-    @JsonSetter("status")
-    public void setStatus(String status) {
-        this.status = status;
+    @JsonSetter("statusCode")
+    public void setStatusCode(Integer statusCode) {
+        this.statusCode = statusCode;
     }
 }

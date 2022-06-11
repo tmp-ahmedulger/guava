@@ -1,7 +1,5 @@
 package com.ulger.guava.parceldeliveryservice.api.parcel.operation;
 
-import com.ulger.guava.parceldeliveryservice.api.ApiException;
-
 public class PreConditionException extends RuntimeException {
 
     private String key;

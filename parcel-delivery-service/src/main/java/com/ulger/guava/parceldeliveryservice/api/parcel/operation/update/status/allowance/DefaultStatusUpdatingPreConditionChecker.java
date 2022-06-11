@@ -1,7 +1,7 @@
 package com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status.allowance;
 
-import com.ulger.guava.parceldeliveryservice.api.ApiException;
 import com.ulger.guava.parceldeliveryservice.api.ApiErrorCode;
+import com.ulger.guava.parceldeliveryservice.api.ApiException;
 import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.OperationPermissionException;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status.StatusUpdateDto;
@@ -9,8 +9,6 @@ import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status.
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status.permission.StatusUpdatingPermissionChecker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
-import java.util.Objects;
 
 @Slf4j
 @Component
@@ -37,10 +35,10 @@ public class DefaultStatusUpdatingPreConditionChecker implements StatusUpdatingP
             throw new OperationPermissionException(permissionCheckParams);
         }
 
-        if (Objects.equals(statusUpdateDto.getStatus(), existingParcel.getStatus())) {
+        if (statusUpdateDto.getStatus() == existingParcel.getStatus()) {
             log.info("Statuses are same, skipping update. sourceLStatus={}, targetStatus={}",
                     existingParcel.getStatus(),
-                    statusUpdateDto.getStatus());
+                    statusUpdateDto.getStatusCode());
 
             throw new ApiException(ApiErrorCode.SAME_STATUS.getKey());
         }

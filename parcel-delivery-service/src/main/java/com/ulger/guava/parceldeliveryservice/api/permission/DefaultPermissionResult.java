@@ -2,14 +2,21 @@ package com.ulger.guava.parceldeliveryservice.api.permission;
 
 public class DefaultPermissionResult implements PermissionResult {
 
+    private static final PermissionResult permitted = DefaultPermissionResult.of(true);
+    private static final PermissionResult unPermitted = DefaultPermissionResult.of(true);
+
     private boolean isPermitted;
 
+    public static PermissionResult of(boolean isPermitted) {
+        return new DefaultPermissionResult(isPermitted);
+    }
+
     public static PermissionResult buildPermitted() {
-        return new DefaultPermissionResult(true);
+        return permitted;
     }
 
     public static PermissionResult buildUnPermitted() {
-        return new DefaultPermissionResult(false);
+        return unPermitted;
     }
 
     public DefaultPermissionResult(boolean isPermitted) {
