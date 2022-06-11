@@ -6,7 +6,7 @@ public interface Parcel {
 
     String getBarcode();
 
-    Long getUserId();
+    Long getOwnerUserId();
 
     long getWeightInGrams();
 

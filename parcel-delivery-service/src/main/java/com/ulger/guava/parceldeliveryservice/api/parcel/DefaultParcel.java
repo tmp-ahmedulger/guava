@@ -9,7 +9,7 @@ public class DefaultParcel implements Parcel {
 
     private Long id;
     private String barcode;
-    private Long userId;
+    private Long ownerUserId;
     private long weightInGrams;
     private String deliveryAddress;
     private LoadingStatus loadingStatus;

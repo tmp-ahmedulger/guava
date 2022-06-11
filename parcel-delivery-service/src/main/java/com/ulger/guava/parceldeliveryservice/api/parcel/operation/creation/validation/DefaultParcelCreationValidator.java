@@ -18,7 +18,7 @@ public class DefaultParcelCreationValidator implements ParcelCreationValidator {
             return validationResult;
         }
 
-        if (parcelCreationDto.getUserId() == null) {
+        if (parcelCreationDto.getOwnerUserId() == null) {
             validationResult.addError("User id is required");
         }
 

@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 public class ParcelCreationDto {
 
-    private Long userId;
+    private Long ownerUserId;
     private Long weightInGrams;
     private String deliveryAddress;
 }

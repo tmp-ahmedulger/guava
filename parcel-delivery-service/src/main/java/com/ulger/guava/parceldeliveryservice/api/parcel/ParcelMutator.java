@@ -9,7 +9,7 @@ public class ParcelMutator implements Parcel {
 
     private Long id;
     private String barcode;
-    private Long userId;
+    private Long ownerUserId;
     private long weightInGrams;
     private String deliveryAddress;
     private LoadingStatus loadingStatus;
@@ -21,7 +21,7 @@ public class ParcelMutator implements Parcel {
     public ParcelMutator(Parcel parcel) {
         this.id = parcel.getId();
         this.barcode = parcel.getBarcode();
-        this.userId = parcel.getUserId();
+        this.ownerUserId = parcel.getOwnerUserId();
         this.weightInGrams = parcel.getWeightInGrams();
         this.deliveryAddress = parcel.getDeliveryAddress();
         this.loadingStatus = parcel.getLoadingStatus();

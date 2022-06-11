@@ -19,16 +19,16 @@ public class ParcelEntity {
     @Column(name = "id", unique = true, nullable = false, precision = 10)
     private Long id;
 
-    @Column(name = "userId", nullable = false, length = 64)
-    private Long userId;
+    @Column(name = "owner_user_id", nullable = false, length = 64)
+    private Long ownerUserId;
 
-    @Column(name = "barcode", nullable = false, length = 64)
+    @Column(name = "barcode", unique = true, nullable = false, length = 64)
     private String barcode;
 
-    @Column(name = "weight_in_grams", unique = true, nullable = false)
+    @Column(name = "weight_in_grams", nullable = false)
     private long weightInGrams;
 
-    @Column(name = "delivery_address", unique = true, nullable = false)
+    @Column(name = "delivery_address", nullable = false)
     private String deliveryAddress;
 
     @Convert(converter = LoadingStatusConverter.class)

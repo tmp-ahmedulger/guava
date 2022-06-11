@@ -26,13 +26,13 @@ public class DefaultAddressUpdatingPreConditionChecker implements AddressUpdatin
     public void check(Parcel existingParcel, AddressUpdateDto addressUpdateDto) {
         AddressUpdatePermissionCheckParams permissionCheckParams = new AddressUpdatePermissionCheckParams(
                 addressUpdateDto.getUpdaterUserId(),
-                existingParcel.getUserId());
+                existingParcel.getOwnerUserId());
 
         if (!permissionChecker.check(permissionCheckParams).isPermitted()) {
             log.warn("Illegal parcel update operation detected. Parcel with id '{}' is attempted to update by userId={}. Parcel owner userId is '{}'",
                     addressUpdateDto.getParcelId(),
                     addressUpdateDto.getUpdaterUserId(),
-                    existingParcel.getUserId());
+                    existingParcel.getOwnerUserId());
 
             throw new OperationPermissionException(permissionCheckParams);
         }

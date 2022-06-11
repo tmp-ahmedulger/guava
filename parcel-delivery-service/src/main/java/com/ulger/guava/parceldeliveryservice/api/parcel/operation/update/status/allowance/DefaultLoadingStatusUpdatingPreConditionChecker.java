@@ -4,9 +4,6 @@ import com.ulger.guava.parceldeliveryservice.api.ApiException;
 import com.ulger.guava.parceldeliveryservice.api.ApiReasonCode;
 import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.OperationPermissionException;
-import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.AddressUpdateDto;
-import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.permission.AddressUpdatePermissionCheckParams;
-import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.permission.AddressUpdatePermissionChecker;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status.LoadingStatusUpdateDto;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status.permission.LoadingStatusUpdatePermissionCheckParams;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status.permission.LoadingStatusUpdatePermissionChecker;
@@ -29,13 +26,13 @@ public class DefaultLoadingStatusUpdatingPreConditionChecker implements LoadingS
     public void check(Parcel existingParcel, LoadingStatusUpdateDto loadingStatusUpdateDto) {
         LoadingStatusUpdatePermissionCheckParams permissionCheckParams = new LoadingStatusUpdatePermissionCheckParams(
                 loadingStatusUpdateDto.getUpdaterUserId(),
-                existingParcel.getUserId());
+                existingParcel.getOwnerUserId());
 
         if (!permissionChecker.check(permissionCheckParams).isPermitted()) {
             log.warn("Illegal parcel update operation detected. Parcel with id '{}' is attempted to update by userId={}. Parcel owner userId is '{}'",
                     loadingStatusUpdateDto.getParcelId(),
                     loadingStatusUpdateDto.getUpdaterUserId(),
-                    existingParcel.getUserId());
+                    existingParcel.getOwnerUserId());
 
             throw new OperationPermissionException(permissionCheckParams);
         }

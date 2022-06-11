@@ -4,6 +4,14 @@ public class DefaultPermissionResult implements PermissionResult {
 
     private boolean isPermitted;
 
+    public static PermissionResult buildPermitted() {
+        return new DefaultPermissionResult(true);
+    }
+
+    public static PermissionResult buildUnPermitted() {
+        return new DefaultPermissionResult(false);
+    }
+
     public DefaultPermissionResult(boolean isPermitted) {
         this.isPermitted = isPermitted;
     }

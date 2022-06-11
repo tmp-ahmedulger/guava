@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 public interface DefaultParcelCreationDtoMapper extends ParcelCreationDtoMapper {
 
     @Override
-    @Mapping(source = "parcelCreationDto.userId", target = "userId")
+    @Mapping(source = "parcelCreationDto.ownerUserId", target = "ownerUserId")
     @Mapping(source = "parcelCreationDto.weightInGrams", target = "weightInGrams")
     @Mapping(source = "parcelCreationDto.deliveryAddress", target = "deliveryAddress")
     DefaultParcel map(ParcelCreationDto parcelCreationDto);

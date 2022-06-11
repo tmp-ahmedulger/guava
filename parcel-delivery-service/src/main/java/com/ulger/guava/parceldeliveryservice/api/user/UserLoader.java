@@ -1,6 +1,6 @@
 package com.ulger.guava.parceldeliveryservice.api.user;
 
-import com.ulger.usermanager.api.User;
+import com.ulger.guava.parceldeliveryservice.infrastructure.authentication.User;
 
 public interface UserLoader {
 
