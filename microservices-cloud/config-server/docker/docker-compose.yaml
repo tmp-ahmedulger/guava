@@ -2,12 +2,15 @@ version: '3'
 
 services:
   #service 1: Config-Server Service Information
-  eureka-server:
+  config-server:
     image: config-server:1.0
     container_name: config-server
     build:
       context: ..
-      dockerfile: Dockerfile
+      dockerfile: ./docker/Dockerfile
     ports:
       - "8888:8888"
     restart: on-failure
+    environment:
+      SPRING_PROFILES_ACTIVE: default
+      eureka.client.serviceUrl.defaultZone: http://host.docker.internal:8761/eureka
