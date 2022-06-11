@@ -24,8 +24,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         this.messageService = messageService;
     }
 
-    @ExceptionHandler()
-    public ResponseEntity<Object> handleGenericException(Exception e, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleGenericException(Exception e, WebRequest request) throws Exception {
 
         if (e instanceof ApiException) {
             return handleApiException((ApiException) e);
@@ -43,7 +43,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             return handlePreConditionException((PreConditionException) e);
         }
 
-        return super.handleExceptionInternal(e, body, headers, status, request);
+        return super.handleException(e, request);
     }
 
     protected ResponseEntity<Object> handleExceptionInternal(Exception e, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {

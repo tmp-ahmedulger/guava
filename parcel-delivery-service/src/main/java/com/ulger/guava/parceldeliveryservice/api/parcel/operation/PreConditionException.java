@@ -11,6 +11,10 @@ public class PreConditionException extends RuntimeException {
         return key;
     }
 
+    private void setKey(String key) {
+        this.key = key;
+    }
+
     public Object[] getArgs() {
         return args;
     }
@@ -42,6 +46,12 @@ public class PreConditionException extends RuntimeException {
         super(message, cause, enableSuppression, writableStackTrace);
         this.key = key;
         this.args = args;
+    }
+
+    public static PreConditionException generateByKey(String key) {
+        PreConditionException preConditionException = new PreConditionException();
+        preConditionException.setKey(key);
+        return preConditionException;
     }
 
     public PreConditionException() {

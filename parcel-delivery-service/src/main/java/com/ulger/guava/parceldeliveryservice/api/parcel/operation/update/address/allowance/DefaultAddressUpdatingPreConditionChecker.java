@@ -42,7 +42,7 @@ public class DefaultAddressUpdatingPreConditionChecker implements AddressUpdatin
                     existingParcel.getDeliveryAddress(),
                     addressUpdateDto.getDeliveryAddress());
 
-            throw new PreConditionException(ApiErrorCode.SAME_ADDRESS.getKey());
+            throw PreConditionException.generateByKey(ApiErrorCode.SAME_ADDRESS.getKey());
         }
     }
 }
