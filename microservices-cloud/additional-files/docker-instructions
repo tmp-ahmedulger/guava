@@ -4,5 +4,10 @@ docker image build -f ./docker/Dockerfile -t authentication-server:1.0  .
 docker image build -f ./docker/Dockerfile -t apigw:1.0  .
 
 docker run -p 8761:8761 eureka-server:1.0
-docker run -p 8888:8888 config-server:1.0
+
+docker run -p 8888:8888 \
+	-e CONFIG_LOCATION="file://Users/ahulger/dev-env/repositories/me/guava-config-repo/" \
+	-v "/Users/ahulger/dev-env/repositories/me/guava-config-repo/:/Users/ahulger/dev-env/repositories/me/guava-config-repo/" \
+	config-server:1.0
+
 docker run -p 9090:9090 authentication-server:1.0
