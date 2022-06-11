@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  #service 1: Authentication-Server Service Information
+  eureka-server:
+    image: authentication-server:1.0
+    container_name: authentication-server
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    ports:
+      - "9090:9090"
+    restart: on-failure

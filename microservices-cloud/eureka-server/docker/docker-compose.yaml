@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  #service 1: Eureka-Server Service Information
+  eureka-server:
+    image: eureka-server:1.0
+    container_name: eureka-server
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+    restart: on-failure

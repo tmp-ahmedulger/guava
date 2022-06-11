@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  #service 1: APIGW Service Information
+  eureka-server:
+    image: apigw:1.0
+    container_name: apigw
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    restart: on-failure
