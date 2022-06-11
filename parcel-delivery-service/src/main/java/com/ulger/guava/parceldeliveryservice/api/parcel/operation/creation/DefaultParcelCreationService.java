@@ -1,7 +1,7 @@
 package com.ulger.guava.parceldeliveryservice.api.parcel.operation.creation;
 
 import com.ulger.guava.parceldeliveryservice.api.parcel.BarcodeGenerator;
-import com.ulger.guava.parceldeliveryservice.api.parcel.LoadingStatus;
+import com.ulger.guava.parceldeliveryservice.api.parcel.Status;
 import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
 import com.ulger.guava.parceldeliveryservice.api.parcel.ParcelMutator;
 import com.ulger.guava.parceldeliveryservice.api.parcel.data.ParcelManager;
@@ -49,7 +49,7 @@ public class DefaultParcelCreationService implements ParcelCreationService {
         Parcel mappedParcel = parcelCreationDtoMapper.map(parcelCreationDto);
 
         ParcelMutator parcelMutator = ParcelMutator.of(mappedParcel);
-        parcelMutator.setLoadingStatus(LoadingStatus.CREATED);
+        parcelMutator.setStatus(Status.CREATED);
         parcelMutator.setBarcode(barcodeGenerator.generate());
 
         log.info("Parcel is being created with barcode={}", parcelMutator.getBarcode());

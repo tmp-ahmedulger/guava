@@ -2,6 +2,6 @@ package com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status
 
 import com.ulger.guava.parceldeliveryservice.api.permission.PermissionChecker;
 
-public interface LoadingStatusUpdatePermissionChecker extends PermissionChecker<LoadingStatusUpdatePermissionCheckParams> {
+public interface StatusUpdatingPermissionChecker extends PermissionChecker<StatusUpdatingPermissionCheckParams> {
 
 }

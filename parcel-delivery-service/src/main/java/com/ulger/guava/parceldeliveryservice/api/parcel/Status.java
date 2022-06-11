@@ -3,7 +3,7 @@ package com.ulger.guava.parceldeliveryservice.api.parcel;
 import java.util.Arrays;
 import java.util.Optional;
 
-public enum LoadingStatus {
+public enum Status {
 
     CREATED(1),
     LOADED(2),
@@ -11,7 +11,7 @@ public enum LoadingStatus {
 
     private final int code;
 
-    LoadingStatus(int code) {
+    Status(int code) {
         this.code = code;
     }
 
@@ -25,14 +25,14 @@ public enum LoadingStatus {
      * @param code specific code used for matching
      * @return matching status. If not found returns Optional.empty
      */
-    public static Optional<LoadingStatus> findByCode(int code) {
+    public static Optional<Status> findByCode(int code) {
         return findByCodeInternal(code);
     }
 
-    private static Optional<LoadingStatus> findByCodeInternal(int code) {
+    private static Optional<Status> findByCodeInternal(int code) {
         return Arrays
                 .stream(values())
-                .filter(loadingStatus -> loadingStatus.code == code)
+                .filter(status -> status.code == code)
                 .findFirst();
     }
 

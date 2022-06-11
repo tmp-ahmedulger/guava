@@ -12,7 +12,7 @@ public class ParcelMutator implements Parcel {
     private Long ownerUserId;
     private long weightInGrams;
     private String deliveryAddress;
-    private LoadingStatus loadingStatus;
+    private Status status;
 
     public static ParcelMutator of(Parcel parcel) {
         return new ParcelMutator(parcel);
@@ -24,6 +24,6 @@ public class ParcelMutator implements Parcel {
         this.ownerUserId = parcel.getOwnerUserId();
         this.weightInGrams = parcel.getWeightInGrams();
         this.deliveryAddress = parcel.getDeliveryAddress();
-        this.loadingStatus = parcel.getLoadingStatus();
+        this.status = parcel.getStatus();
     }
 }

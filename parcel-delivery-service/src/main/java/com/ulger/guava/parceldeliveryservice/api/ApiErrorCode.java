@@ -4,7 +4,7 @@ public enum ApiErrorCode {
 
     SAME_ADDRESS(1, "error.parcel.address.same"),
     PARCEL_NOT_FOUND(2, "error.parcel.not-found"),
-    SAME_LOADING_STATUS(3, "error.parcel.loading-status.same");
+    SAME_STATUS(3, "error.parcel.status.same");
 
     private final int code;
     private final String key;

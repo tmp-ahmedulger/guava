@@ -9,10 +9,10 @@ import java.util.Objects;
 
 @Component
 @Qualifier("addressUpdatePermissionChecker")
-public class DefaultLoadingStatusUpdatePermissionChecker implements LoadingStatusUpdatePermissionChecker {
+public class DefaultStatusUpdatingPermissionChecker implements StatusUpdatingPermissionChecker {
 
     @Override
-    public PermissionResult check(LoadingStatusUpdatePermissionCheckParams params) {
+    public PermissionResult check(StatusUpdatingPermissionCheckParams params) {
         if (Objects.equals(params.getOwnerUserId(), params.getAttemptingUserId())) {
             return new DefaultPermissionResult(true);
         }

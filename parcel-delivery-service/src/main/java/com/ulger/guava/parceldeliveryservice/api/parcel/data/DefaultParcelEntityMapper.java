@@ -13,7 +13,7 @@ public interface DefaultParcelEntityMapper extends ParcelEntityMapper {
     @Mapping(source = "parcel.barcode", target = "barcode")
     @Mapping(source = "parcel.weightInGrams", target = "weightInGrams")
     @Mapping(source = "parcel.deliveryAddress", target = "deliveryAddress")
-    @Mapping(source = "parcel.loadingStatus", target = "loadingStatus")
+    @Mapping(source = "parcel.status", target = "status")
     ParcelEntity mapToEntity(Parcel parcel);
 
     @Override
@@ -21,6 +21,6 @@ public interface DefaultParcelEntityMapper extends ParcelEntityMapper {
     @Mapping(source = "parcelEntity.barcode", target = "barcode")
     @Mapping(source = "parcelEntity.weightInGrams", target = "weightInGrams")
     @Mapping(source = "parcelEntity.deliveryAddress", target = "deliveryAddress")
-    @Mapping(source = "parcelEntity.loadingStatus", target = "loadingStatus")
+    @Mapping(source = "parcelEntity.status", target = "status")
     DefaultParcel mapFromEntity(ParcelEntity parcelEntity);
 }

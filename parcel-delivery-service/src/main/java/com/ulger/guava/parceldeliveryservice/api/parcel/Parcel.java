@@ -12,5 +12,5 @@ public interface Parcel {
 
     String getDeliveryAddress();
 
-    LoadingStatus getLoadingStatus();
+    Status getStatus();
 }

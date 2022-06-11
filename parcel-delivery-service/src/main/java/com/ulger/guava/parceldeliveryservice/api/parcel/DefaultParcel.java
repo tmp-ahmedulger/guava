@@ -12,6 +12,6 @@ public class DefaultParcel implements Parcel {
     private Long ownerUserId;
     private long weightInGrams;
     private String deliveryAddress;
-    private LoadingStatus loadingStatus;
+    private Status status;
 
 }

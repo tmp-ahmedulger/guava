@@ -1,7 +1,7 @@
 package com.ulger.guava.parceldeliveryservice.api.parcel.data;
 
-import com.ulger.guava.parceldeliveryservice.api.parcel.LoadingStatus;
-import com.ulger.guava.parceldeliveryservice.api.parcel.data.converter.LoadingStatusConverter;
+import com.ulger.guava.parceldeliveryservice.api.parcel.Status;
+import com.ulger.guava.parceldeliveryservice.api.parcel.data.converter.StatusConverter;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,8 +31,8 @@ public class ParcelEntity {
     @Column(name = "delivery_address", nullable = false)
     private String deliveryAddress;
 
-    @Convert(converter = LoadingStatusConverter.class)
-    @Column(name = "loading_status", nullable = false)
-    private LoadingStatus loadingStatus;
+    @Convert(converter = StatusConverter.class)
+    @Column(name = "status", nullable = false)
+    private Status status;
 
 }

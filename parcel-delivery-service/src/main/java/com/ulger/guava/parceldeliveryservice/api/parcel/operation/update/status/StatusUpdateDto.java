@@ -5,9 +5,9 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class LoadingStatusUpdateDto {
+public class StatusUpdateDto {
 
     private Long parcelId;
     private Long updaterUserId;
-    private String loadingStatus;
+    private String status;
 }
