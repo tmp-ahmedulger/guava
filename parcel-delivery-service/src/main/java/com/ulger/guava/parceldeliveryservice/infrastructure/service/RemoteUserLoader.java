@@ -1,5 +1,6 @@
-package com.ulger.guava.parceldeliveryservice.api.user;
+package com.ulger.guava.parceldeliveryservice.infrastructure.service;
 
+import com.ulger.guava.parceldeliveryservice.api.user.UserLoader;
 import com.ulger.guava.parceldeliveryservice.infrastructure.authentication.User;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;

@@ -1,5 +1,6 @@
-package com.ulger.guava.parceldeliveryservice.api.user;
+package com.ulger.guava.parceldeliveryservice.infrastructure.service;
 
+import com.ulger.guava.parceldeliveryservice.api.user.UserLoader;
 import com.ulger.guava.parceldeliveryservice.infrastructure.authentication.DefaultUserAuthentication;
 import com.ulger.guava.parceldeliveryservice.infrastructure.authentication.SecurityContextHelper;
 import com.ulger.guava.parceldeliveryservice.infrastructure.authentication.User;
