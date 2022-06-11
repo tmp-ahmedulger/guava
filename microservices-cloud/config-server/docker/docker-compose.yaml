@@ -13,7 +13,7 @@ services:
     restart: on-failure
     environment:
       SPRING_PROFILES_ACTIVE: default
-      SPRING_CLOUD_CONFIG_SERVER_GIT_URI: /Users/ahulger/dev-env/repositories/me/guava-config-repo/
+      SPRING_CLOUD_CONFIG_SERVER_GIT_URI: file://Users/ahulger/dev-env/repositories/me/guava-config-repo
       eureka.client.serviceUrl.defaultZone: http://host.docker.internal:8761/eureka
     volumes:
       - /Users/ahulger/dev-env/repositories/me/guava-config-repo/:/Users/ahulger/dev-env/repositories/me/guava-config-repo/
