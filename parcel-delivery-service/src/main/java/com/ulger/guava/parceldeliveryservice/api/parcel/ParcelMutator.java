@@ -1,5 +1,6 @@
 package com.ulger.guava.parceldeliveryservice.api.parcel;
 
+import com.ulger.guava.parceldeliveryservice.api.courier.Courier;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,8 @@ public class ParcelMutator implements Parcel {
     private long weightInGrams;
     private String deliveryAddress;
     private Status status;
+    private State state;
+    private Courier courier;
 
     public static ParcelMutator of(Parcel parcel) {
         return new ParcelMutator(parcel);
@@ -25,5 +28,7 @@ public class ParcelMutator implements Parcel {
         this.weightInGrams = parcel.getWeightInGrams();
         this.deliveryAddress = parcel.getDeliveryAddress();
         this.status = parcel.getStatus();
+        this.state = parcel.getState();
+        this.courier = parcel.getCourier();
     }
 }

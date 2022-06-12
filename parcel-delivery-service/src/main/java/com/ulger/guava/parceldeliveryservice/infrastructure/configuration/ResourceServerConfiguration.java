@@ -36,7 +36,6 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
                 .authorizeRequests()
-                    .anyRequest()
-                    .authenticated();
+                    .anyRequest().authenticated();
     }
 }

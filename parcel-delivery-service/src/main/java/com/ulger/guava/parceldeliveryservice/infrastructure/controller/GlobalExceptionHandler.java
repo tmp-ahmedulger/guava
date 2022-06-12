@@ -2,6 +2,7 @@ package com.ulger.guava.parceldeliveryservice.infrastructure.controller;
 
 import com.ulger.guava.parceldeliveryservice.api.ApiException;
 import com.ulger.guava.parceldeliveryservice.api.PermissionException;
+import com.ulger.guava.parceldeliveryservice.api.ResourceNotFoundException;
 import com.ulger.guava.parceldeliveryservice.api.consent.ConsentFilterException;
 import com.ulger.guava.parceldeliveryservice.infrastructure.service.MessageService;
 import com.ulger.validation.ValidationException;
@@ -35,6 +36,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             return handleValidationException((ValidationException) e);
         }
 
+        if (e instanceof ResourceNotFoundException) {
+            return handleResourceNotFoundException((ResourceNotFoundException) e);
+        }
+
         if (e instanceof ConsentFilterException && e.getCause() instanceof PermissionException) {
             return handlePermissionException((PermissionException) e.getCause());
         }
@@ -49,7 +54,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return super.handleException(e, request);
     }
-
     protected ResponseEntity<Object> handleExceptionInternal(Exception e, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
         log.error("Unknown Exception occurred", e);
 
@@ -71,6 +75,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity
                 .badRequest()
                 .body(apiErrorResponse);
+    }
+
+    private ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException e) {
+        return ResponseEntity.notFound().build();
     }
 
     protected ResponseEntity<Object> handleValidationException(ValidationException exception) {

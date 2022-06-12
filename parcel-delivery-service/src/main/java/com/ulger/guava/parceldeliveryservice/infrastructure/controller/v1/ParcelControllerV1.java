@@ -1,108 +1,74 @@
 package com.ulger.guava.parceldeliveryservice.infrastructure.controller.v1;
 
 import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
-import com.ulger.guava.parceldeliveryservice.api.parcel.operation.creation.ParcelCreationDto;
-import com.ulger.guava.parceldeliveryservice.api.parcel.operation.creation.ParcelCreationService;
-import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.AddressUpdateDto;
-import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.AddressUpdateService;
-import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status.StatusUpdateDto;
-import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status.StatusUpdateService;
-import com.ulger.guava.parceldeliveryservice.infrastructure.authentication.SecurityContextHelper;
 import com.ulger.guava.parceldeliveryservice.infrastructure.controller.v1.request.creation.ParcelCreationRequest;
-import com.ulger.guava.parceldeliveryservice.infrastructure.controller.v1.request.creation.ParcelCreationRequestMapper;
 import com.ulger.guava.parceldeliveryservice.infrastructure.controller.v1.request.update.ParcelAddressUpdateRequest;
 import com.ulger.guava.parceldeliveryservice.infrastructure.controller.v1.request.update.ParcelStatusUpdateRequest;
-import lombok.extern.slf4j.Slf4j;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
 
-@Slf4j
-@RestController
-@RequestMapping("/rest/api/v1/parcel")
-public class ParcelControllerV1 {
+import javax.ws.rs.Consumes;
 
-    private final ParcelCreationService parcelCreationService;
-    private final AddressUpdateService addressUpdateService;
-    private final StatusUpdateService statusUpdateService;
-    private final ParcelCreationRequestMapper defaultParcelCreationRequestMapper;
+public interface ParcelControllerV1 {
 
-    public ParcelControllerV1(
-            ParcelCreationService parcelCreationService,
-            AddressUpdateService addressUpdateService,
-            StatusUpdateService statusUpdateService,
-            ParcelCreationRequestMapper defaultParcelCreationRequestMapper) {
+    @Tag(name = "Parcel Creating")
+    @Consumes("application/json")
+    @Operation(
+            summary = "Creates parcel",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Parcel Object", content = @Content(mediaType = "application/json", schema = @Schema(implementation=Parcel.class))),
+                    @ApiResponse(responseCode = "400", description = "Invalid data"),
+                    @ApiResponse(responseCode = "401", description = "When credentials not given")
+            })
+    Parcel create(
+            @Parameter(in = ParameterIn.HEADER, name = "Authorization", description = "Bearer Token Starts with JWT")
+            @RequestBody(
+                    description = "Parcel Creation Request",
+                    required = true,
+                    content = @Content(schema = @Schema(implementation = ParcelCreationRequest.class))) ParcelCreationRequest creationRequest);
 
-        this.parcelCreationService = parcelCreationService;
-        this.addressUpdateService = addressUpdateService;
-        this.statusUpdateService = statusUpdateService;
-        this.defaultParcelCreationRequestMapper = defaultParcelCreationRequestMapper;
-    }
+    @Tag(name = "Parcel Address Updating")
+    @Consumes("application/json")
+    @Operation(
+            summary = "Updates parcel address",
+            responses = {
+                    @ApiResponse(responseCode = "204", description = "Nothing returns"),
+                    @ApiResponse(responseCode = "400", description = "Invalid data"),
+                    @ApiResponse(responseCode = "401", description = "When credentials not given"),
+                    @ApiResponse(responseCode = "403", description = "When operation not permitted to attempting user"),
+                    @ApiResponse(responseCode = "404", description = "When parcel not found with given id")
+            })
+    ResponseEntity<?> updateAddress(
+            @Parameter(in = ParameterIn.HEADER, name = "Authorization", description = "Bearer Token Starts with JWT")
+            @RequestBody(
+                    description = "Parcel Address Update Request",
+                    required = true,
+                    content = @Content(schema = @Schema(implementation = ParcelAddressUpdateRequest.class))) ParcelAddressUpdateRequest updateRequest,
+            @Parameter(description = "Parcel Id", required = true) Long parcelId);
 
-    @PostMapping
-    public Parcel create(@RequestBody ParcelCreationRequest creationRequest) {
-
-        Long userId = SecurityContextHelper.getAuthenticated().getUserId();
-
-        log.info("Parcel creation request has received, request={}, userId={}", creationRequest, userId);
-        ParcelCreationDto parcelCreationDto = defaultParcelCreationRequestMapper.map(creationRequest, userId);
-
-        return parcelCreationService.create(parcelCreationDto);
-    }
-
-    @PreAuthorize("hasAuthority('STANDARD') or hasAuthority('ADMIN')")
-    @PutMapping("/{parcelId}/address")
-    public ResponseEntity<?> updateAddress(
-            @RequestBody ParcelAddressUpdateRequest updateRequest,
-            @PathVariable("parcelId") Long parcelId) {
-
-        Long userId = SecurityContextHelper.getAuthenticated().getUserId();
-
-        log.info("Parcel address update request received, parcelId={}, userId={}, address={}",
-                parcelId, userId, updateRequest.getDeliveryAddress());
-
-        AddressUpdateDto addressUpdateDto = AddressUpdateDto.builder()
-                .updaterUserId(userId)
-                .parcelId(parcelId)
-                .deliveryAddress(updateRequest.getDeliveryAddress())
-                .build();
-
-        boolean isUpdated = addressUpdateService.update(addressUpdateDto);
-
-        if (!isUpdated) {
-            return ResponseEntity
-                    .internalServerError()
-                    .body("Parcel address can not updated. Contact with administrators");
-        }
-
-        return ResponseEntity.noContent().build();
-    }
-
-    @PreAuthorize("hasAuthority('COURIER') or hasAuthority('ADMIN')")
-    @PutMapping("/{parcelId}/status")
-    public ResponseEntity<?> updateStatus(
-            @RequestBody ParcelStatusUpdateRequest updateRequest,
-            @PathVariable("parcelId") Long parcelId) {
-
-        Long userId = SecurityContextHelper.getAuthenticated().getUserId();
-
-        log.info("Parcel status update request received, parcelId={}, userId={}, statusCode={}",
-                parcelId, userId, updateRequest.getStatusCode());
-
-        StatusUpdateDto statusUpdateDto = StatusUpdateDto.builder()
-                .updaterUserId(userId)
-                .parcelId(parcelId)
-                .statusCode(updateRequest.getStatusCode())
-                .build();
-
-        boolean isUpdated = statusUpdateService.update(statusUpdateDto);
-
-        if (!isUpdated) {
-            return ResponseEntity
-                    .internalServerError()
-                    .body("Parcel status can not updated. Contact with administrators");
-        }
-
-        return ResponseEntity.noContent().build();
-    }
+    @Tag(name = "Parcel Status Updating")
+    @Consumes("application/json")
+    @Operation(
+            summary = "Updates parcel status",
+            responses = {
+                    @ApiResponse(responseCode = "204", description = "Nothing returns"),
+                    @ApiResponse(responseCode = "400", description = "Invalid data"),
+                    @ApiResponse(responseCode = "401", description = "When credentials not given"),
+                    @ApiResponse(responseCode = "403", description = "When operation not permitted to attempting user"),
+                    @ApiResponse(responseCode = "404", description = "When parcel not found with given id")
+            })
+    ResponseEntity<?> updateStatus(
+            @Parameter(in = ParameterIn.HEADER, name = "Authorization", description = "Bearer Token Starts with JWT")
+            @RequestBody(
+                    description = "Parcel Status Update Request",
+                    required = true,
+                    content = @Content(schema = @Schema(implementation = ParcelStatusUpdateRequest.class))) ParcelStatusUpdateRequest updateRequest,
+            @Parameter(description = "Parcel Id", required = true) Long parcelId);
 }

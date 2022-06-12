@@ -1,7 +1,5 @@
 package com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.consent.filter;
 
-import com.ulger.guava.parceldeliveryservice.api.ApiErrorCode;
-import com.ulger.guava.parceldeliveryservice.api.ApiException;
 import com.ulger.guava.parceldeliveryservice.api.PermissionException;
 import com.ulger.guava.parceldeliveryservice.api.PreDefinedRole;
 import com.ulger.guava.parceldeliveryservice.api.consent.ConsentFilterException;

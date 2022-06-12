@@ -4,6 +4,7 @@ plugins {
 }
 
 version '1.0'
+sourceCompatibility = '11'
 
 repositories {
     mavenLocal()
