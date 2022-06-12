@@ -1,7 +1,7 @@
 package com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status;
 
 import com.ulger.guava.parceldeliveryservice.api.ApiErrorCode;
-import com.ulger.guava.parceldeliveryservice.api.ApiException;
+import com.ulger.guava.parceldeliveryservice.api.ResourceNotFoundException;
 import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
 import com.ulger.guava.parceldeliveryservice.api.parcel.data.ParcelManager;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status.consent.StatusUpdateConsentChecker;
@@ -46,7 +46,7 @@ public class DefaultStatusUpdateService implements StatusUpdateService {
 
         Parcel existingParcel = parcelManager
                 .findById(statusUpdateDto.getParcelId())
-                .orElseThrow(() -> new ApiException(ApiErrorCode.PARCEL_NOT_FOUND.getKey(), statusUpdateDto.getParcelId()));
+                .orElseThrow(() -> new ResourceNotFoundException(ApiErrorCode.PARCEL_NOT_FOUND.getKey(), statusUpdateDto.getParcelId()));
 
         updatingPreConditionChecker.check(existingParcel, statusUpdateDto);
 

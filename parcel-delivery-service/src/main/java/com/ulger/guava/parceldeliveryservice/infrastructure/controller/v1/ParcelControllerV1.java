@@ -12,11 +12,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.HeaderParam;
 
 public interface ParcelControllerV1 {
 

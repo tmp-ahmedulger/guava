@@ -1,5 +1,7 @@
 package com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address;
 
+import com.ulger.guava.parceldeliveryservice.api.ResourceNotFoundException;
+
 /**
  * This interface defines update operations of parcels.
  */
@@ -17,7 +19,7 @@ public interface AddressUpdateService {
      * @throws com.ulger.guava.parceldeliveryservice.api.consent.ConsentFilterException
      *          if given delivery address is same with current address
      *
-     * @throws com.ulger.guava.parceldeliveryservice.api.ApiException if parcel not found
+     * @throws ResourceNotFoundException if parcel not found
      *
      * @return true if update is successful or else false
      */
