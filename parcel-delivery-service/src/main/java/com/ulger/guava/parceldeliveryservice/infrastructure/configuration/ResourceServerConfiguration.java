@@ -35,11 +35,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
-                .requestMatchers()
-                    .and()
                 .authorizeRequests()
-                    .antMatchers("/swagger-ui.html").permitAll()
-                    .mvcMatchers("/swagger-ui/**").permitAll()
                     .anyRequest().authenticated();
     }
 }
