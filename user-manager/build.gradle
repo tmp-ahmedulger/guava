@@ -5,6 +5,7 @@ plugins {
 
 group 'com.ulger.usermanager'
 version '1.0'
+sourceCompatibility = '11'
 
 repositories {
     mavenLocal()
@@ -12,15 +13,4 @@ repositories {
 }
 
 dependencies {
-}
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId = 'com.ulger.usermanager'
-            version = '1.0'
-
-            from components.java
-        }
-    }
 }
