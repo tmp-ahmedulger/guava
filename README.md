@@ -34,6 +34,15 @@ Second Github Account: https://github.com/tmp-ahmedulger
 <br>
 <br>
 
+**API Documentation**
+| API | Url |
+|--|--|
+| Authentication Server | http://localhost:9090/swagger-ui/ |
+| Parcel Delivery Service | http://localhost:7070/swagger-ui/ |
+
+
+<br>
+<br>
 
 
 **To Run Application**
@@ -70,7 +79,8 @@ Config Repo Location
  8. Lombok
  9. PostgresSQL
  10. JUnit and Mockito
- 11. Docker
+ 11. Swagger
+ 12. Docker
 
 
 <br>
@@ -80,7 +90,6 @@ Config Repo Location
 **Objects**
 | Name | Status |
 |--|--|
-| Swagger | Skipped |
 | Message Brokers | Skipped |
 | Unit Tests | Not written all cases |
 | Endpoints | Not written all endpoints |
