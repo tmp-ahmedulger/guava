@@ -1,7 +1,6 @@
 package com.ulger.guava.parceldeliveryservice.api.parcel.operation.creation;
 
 import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
-import com.ulger.guava.parceldeliveryservice.api.parcel.ParcelOperationException;
 import com.ulger.guava.parceldeliveryservice.api.parcel.Status;
 
 /**
@@ -15,7 +14,6 @@ public interface ParcelCreationService {
      *
      * @param parcelCreationDto holds creation info
      * @throws com.ulger.validation.ValidationException when given creation data is invalid
-     * @throws ParcelOperationException when creation failed
      * @return created parcel
      */
     Parcel create(ParcelCreationDto parcelCreationDto);

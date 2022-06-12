@@ -1,8 +1,7 @@
 package com.ulger.guava.parceldeliveryservice.infrastructure.controller;
 
 import com.ulger.guava.parceldeliveryservice.api.ApiException;
-import com.ulger.guava.parceldeliveryservice.api.parcel.operation.OperationPermissionException;
-import com.ulger.guava.parceldeliveryservice.api.parcel.operation.PreConditionException;
+import com.ulger.guava.parceldeliveryservice.api.PermissionException;
 import com.ulger.guava.parceldeliveryservice.infrastructure.service.MessageService;
 import com.ulger.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
@@ -33,14 +32,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         if (e instanceof ValidationException) {
             return handleValidationException((ValidationException) e);
-        }
-
-        if (e instanceof PreConditionException && e.getCause() instanceof OperationPermissionException) {
-            return handleOperationPermissionException((OperationPermissionException) e.getCause());
-        }
-
-        if (e instanceof PreConditionException) {
-            return handlePreConditionException((PreConditionException) e);
         }
 
         return super.handleException(e, request);
@@ -80,7 +71,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .body(apiErrorResponse);
     }
 
-    private ResponseEntity<Object> handleOperationPermissionException(OperationPermissionException e) {
+    private ResponseEntity<Object> handleOperationPermissionException(PermissionException e) {
 
         ApiResponse apiErrorResponse = ApiResponse.builder()
                 .message("You are not permitted to do this operation")
@@ -88,22 +79,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return ResponseEntity
                 .status(HttpStatus.FORBIDDEN)
-                .body(apiErrorResponse);
-    }
-
-    private ResponseEntity<Object> handlePreConditionException(PreConditionException e) {
-        log.error("PreCondition Exception occurred, reason: {}", e.getKey(), e);
-
-        String resolvedMessage = messageService.getMessage(e.getKey(), e.getArgs());
-
-        log.error("PreCondition Exception detail: {}", resolvedMessage);
-
-        ApiResponse apiErrorResponse = ApiResponse.builder()
-                .message(resolvedMessage)
-                .build();
-
-        return ResponseEntity
-                .badRequest()
                 .body(apiErrorResponse);
     }
 }

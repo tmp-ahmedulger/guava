@@ -4,7 +4,7 @@ import com.ulger.guava.parceldeliveryservice.api.ApiErrorCode;
 import com.ulger.guava.parceldeliveryservice.api.ApiException;
 import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
 import com.ulger.guava.parceldeliveryservice.api.parcel.data.ParcelManager;
-import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status.allowance.StatusUpdatingPreConditionChecker;
+import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status.consent.StatusUpdateConsentChecker;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.status.validation.StatusUpdateValidator;
 import com.ulger.validation.ValidationException;
 import com.ulger.validation.ValidationResult;
@@ -17,12 +17,12 @@ public class DefaultStatusUpdateService implements StatusUpdateService {
 
     private final StatusUpdateValidator statusUpdateValidator;
     private final ParcelManager parcelManager;
-    private final StatusUpdatingPreConditionChecker updatingPreConditionChecker;
+    private final StatusUpdateConsentChecker updatingPreConditionChecker;
 
     public DefaultStatusUpdateService(
             StatusUpdateValidator statusUpdateValidator,
             ParcelManager parcelManager,
-            StatusUpdatingPreConditionChecker updatingPreConditionChecker) {
+            StatusUpdateConsentChecker updatingPreConditionChecker) {
 
         this.statusUpdateValidator = statusUpdateValidator;
         this.parcelManager = parcelManager;

@@ -4,7 +4,7 @@ import com.ulger.guava.parceldeliveryservice.api.ApiErrorCode;
 import com.ulger.guava.parceldeliveryservice.api.ApiException;
 import com.ulger.guava.parceldeliveryservice.api.parcel.Parcel;
 import com.ulger.guava.parceldeliveryservice.api.parcel.data.ParcelManager;
-import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.allowance.AddressUpdatingPreConditionChecker;
+import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.consent.AddressUpdateConsentChecker;
 import com.ulger.guava.parceldeliveryservice.api.parcel.operation.update.address.validation.AddressUpdateValidator;
 import com.ulger.validation.ValidationException;
 import com.ulger.validation.ValidationResult;
@@ -17,12 +17,12 @@ public class DefaultAddressUpdateService implements AddressUpdateService {
 
     private final ParcelManager parcelManager;
     private final AddressUpdateValidator updateValidator;
-    private final AddressUpdatingPreConditionChecker updatingPreConditionChecker;
+    private final AddressUpdateConsentChecker updatingPreConditionChecker;
 
     public DefaultAddressUpdateService(
             ParcelManager parcelManager,
             AddressUpdateValidator updateValidator,
-            AddressUpdatingPreConditionChecker updatingPreConditionChecker) {
+            AddressUpdateConsentChecker updatingPreConditionChecker) {
 
         this.parcelManager = parcelManager;
         this.updateValidator = updateValidator;
