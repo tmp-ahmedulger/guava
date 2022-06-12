@@ -14,6 +14,7 @@ public class ParcelMutator implements Parcel {
     private long weightInGrams;
     private String deliveryAddress;
     private Status status;
+    private State state;
     private Courier courier;
 
     public static ParcelMutator of(Parcel parcel) {
@@ -27,6 +28,7 @@ public class ParcelMutator implements Parcel {
         this.weightInGrams = parcel.getWeightInGrams();
         this.deliveryAddress = parcel.getDeliveryAddress();
         this.status = parcel.getStatus();
+        this.state = parcel.getState();
         this.courier = parcel.getCourier();
     }
 }

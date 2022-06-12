@@ -1,7 +1,9 @@
 package com.ulger.guava.parceldeliveryservice.api.parcel.data;
 
 import com.ulger.guava.parceldeliveryservice.api.courier.data.CourierEntity;
+import com.ulger.guava.parceldeliveryservice.api.parcel.State;
 import com.ulger.guava.parceldeliveryservice.api.parcel.Status;
+import com.ulger.guava.parceldeliveryservice.api.parcel.data.converter.StateConverter;
 import com.ulger.guava.parceldeliveryservice.api.parcel.data.converter.StatusConverter;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,6 +37,10 @@ public class ParcelEntity {
     @Convert(converter = StatusConverter.class)
     @Column(name = "status", nullable = false)
     private Status status;
+
+    @Convert(converter = StateConverter.class)
+    @Column(name = "state", nullable = false)
+    private State state;
 
     @ManyToOne
     @JoinColumn(name = "courier_id")

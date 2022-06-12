@@ -16,5 +16,7 @@ public interface Parcel {
 
     Status getStatus();
 
+    State getState();
+
     Courier getCourier();
 }
