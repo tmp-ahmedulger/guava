@@ -1,5 +1,7 @@
 package com.ulger.guava.parceldeliveryservice.api.parcel;
 
+import com.ulger.guava.parceldeliveryservice.api.courier.Courier;
+
 public interface Parcel {
 
     Long getId();
@@ -13,4 +15,6 @@ public interface Parcel {
     String getDeliveryAddress();
 
     Status getStatus();
+
+    Courier getCourier();
 }
