@@ -4,7 +4,7 @@ services:
   #service 1: PostgresSQL Database Information
   postgres-service:
     image: postgres
-    container_name: postgres
+    container_name: postgres-parcel-delivery-service
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=asd123

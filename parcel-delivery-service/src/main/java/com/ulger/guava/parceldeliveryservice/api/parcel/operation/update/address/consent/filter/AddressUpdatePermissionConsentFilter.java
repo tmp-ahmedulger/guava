@@ -18,7 +18,7 @@ public class AddressUpdatePermissionConsentFilter implements AddressUpdateConsen
 
     private final UserLoader userLoader;
 
-    public AddressUpdatePermissionConsentFilter(UserLoader userLoader) {
+    public AddressUpdatePermissionConsentFilter(@Qualifier("securityContextUserLoader") UserLoader userLoader) {
         this.userLoader = userLoader;
     }
 

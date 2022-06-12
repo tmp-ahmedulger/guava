@@ -17,7 +17,7 @@ public class StatusUpdatePermissionConsentFilter implements StatusUpdateConsentF
     private final UserLoader userLoader;
     private final Set<String> permittedRoles;
 
-    public StatusUpdatePermissionConsentFilter(UserLoader userLoader) {
+    public StatusUpdatePermissionConsentFilter(@Qualifier("securityContextUserLoader") UserLoader userLoader) {
         this.userLoader = userLoader;
         this.permittedRoles = loadPermittedRoles();
     }
