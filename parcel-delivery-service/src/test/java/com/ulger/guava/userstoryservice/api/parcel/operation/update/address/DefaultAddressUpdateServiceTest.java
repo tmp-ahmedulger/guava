@@ -133,12 +133,29 @@ public class DefaultAddressUpdateServiceTest  {
         boolean isUpdated = addressUpdateService.update(addressUpdateDto);
 
         // then
+        Assertions.assertThat(isUpdated).isTrue();
+
         InOrder inOrder = Mockito.inOrder(updateValidator, parcelManager, addressUpdateConsentChecker, parcelManager);
         inOrder.verify(updateValidator, times(1)).validate(any());
         inOrder.verify(parcelManager, times(1)).findById(eq(2L));
         inOrder.verify(addressUpdateConsentChecker, times(1)).check(any(), any());
         inOrder.verify(parcelManager, times(1)).updateDeliveryAddress(eq(2L), eq("addressY"));
 
+        Assertions.assertThat(updateDtoArgumentCaptorForValidator.getValue().getParcelId()).isEqualTo(2L);
+        Assertions.assertThat(updateDtoArgumentCaptorForValidator.getValue().getUpdaterUserId()).isEqualTo(3L);
+        Assertions.assertThat(updateDtoArgumentCaptorForValidator.getValue().getDeliveryAddress()).isEqualTo("addressY");
+
+        Assertions.assertThat(existingParcelArgumentCaptor.getValue().getId()).isEqualTo(2L);
+        Assertions.assertThat(existingParcelArgumentCaptor.getValue().getOwnerUserId()).isEqualTo(3L);
+        Assertions.assertThat(existingParcelArgumentCaptor.getValue().getDeliveryAddress()).isEqualTo("deliveryAddressX");
+        Assertions.assertThat(existingParcelArgumentCaptor.getValue().getBarcode()).isEqualTo("barcodeX");
+        Assertions.assertThat(existingParcelArgumentCaptor.getValue().getWeightInGrams()).isEqualTo(200);
+        Assertions.assertThat(existingParcelArgumentCaptor.getValue().getState()).isEqualTo(State.ACTIVE);
+        Assertions.assertThat(existingParcelArgumentCaptor.getValue().getStatus()).isEqualTo(Status.CREATED);
+
+        Assertions.assertThat(updateDtoArgumentCaptorForConsentChecker.getValue().getParcelId()).isEqualTo(2L);
+        Assertions.assertThat(updateDtoArgumentCaptorForConsentChecker.getValue().getUpdaterUserId()).isEqualTo(3L);
+        Assertions.assertThat(updateDtoArgumentCaptorForConsentChecker.getValue().getDeliveryAddress()).isEqualTo("addressY");
     }
 
     private AddressUpdateDto createAddressUpdateDtoSample() {
