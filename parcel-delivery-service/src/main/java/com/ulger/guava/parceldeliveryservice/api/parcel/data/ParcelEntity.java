@@ -1,5 +1,6 @@
 package com.ulger.guava.parceldeliveryservice.api.parcel.data;
 
+import com.ulger.guava.parceldeliveryservice.api.courier.data.CourierEntity;
 import com.ulger.guava.parceldeliveryservice.api.parcel.Status;
 import com.ulger.guava.parceldeliveryservice.api.parcel.data.converter.StatusConverter;
 import lombok.Getter;
@@ -14,8 +15,8 @@ import javax.persistence.*;
 public class ParcelEntity {
 
     @Id
-    @GeneratedValue(generator = "seq_gen_parcel_delivery", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "seq_gen_parcel_delivery", sequenceName = "seq_gen_parcel_delivery", allocationSize = 1)
+    @GeneratedValue(generator = "seq_gen_parcel", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "seq_gen_parcel", sequenceName = "seq_gen_parcel", allocationSize = 1)
     @Column(name = "id", unique = true, nullable = false, precision = 10)
     private Long id;
 
@@ -35,4 +36,7 @@ public class ParcelEntity {
     @Column(name = "status", nullable = false)
     private Status status;
 
+    @ManyToOne
+    @JoinColumn(name = "courier_id")
+    private CourierEntity courierEntity;
 }
