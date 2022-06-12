@@ -17,16 +17,16 @@ public class DefaultAddressUpdateService implements AddressUpdateService {
 
     private final ParcelManager parcelManager;
     private final AddressUpdateValidator updateValidator;
-    private final AddressUpdateConsentChecker updatingPreConditionChecker;
+    private final AddressUpdateConsentChecker addressUpdateConsentChecker;
 
     public DefaultAddressUpdateService(
             ParcelManager parcelManager,
             AddressUpdateValidator updateValidator,
-            AddressUpdateConsentChecker updatingPreConditionChecker) {
+            AddressUpdateConsentChecker addressUpdateConsentChecker) {
 
         this.parcelManager = parcelManager;
         this.updateValidator = updateValidator;
-        this.updatingPreConditionChecker = updatingPreConditionChecker;
+        this.addressUpdateConsentChecker = addressUpdateConsentChecker;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class DefaultAddressUpdateService implements AddressUpdateService {
                 .findById(addressUpdateDto.getParcelId())
                 .orElseThrow(() -> new ResourceNotFoundException(ApiErrorCode.PARCEL_NOT_FOUND.getKey(), addressUpdateDto.getParcelId()));
 
-        updatingPreConditionChecker.check(existingParcel, addressUpdateDto);
+        addressUpdateConsentChecker.check(existingParcel, addressUpdateDto);
 
         log.info("Parcel pre-condition check for address updating is completed. Parcel address is being updated");
 

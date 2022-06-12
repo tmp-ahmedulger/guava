@@ -17,16 +17,16 @@ public class DefaultStatusUpdateService implements StatusUpdateService {
 
     private final StatusUpdateValidator statusUpdateValidator;
     private final ParcelManager parcelManager;
-    private final StatusUpdateConsentChecker updatingPreConditionChecker;
+    private final StatusUpdateConsentChecker statusUpdateConsentChecker;
 
     public DefaultStatusUpdateService(
             StatusUpdateValidator statusUpdateValidator,
             ParcelManager parcelManager,
-            StatusUpdateConsentChecker updatingPreConditionChecker) {
+            StatusUpdateConsentChecker statusUpdateConsentChecker) {
 
         this.statusUpdateValidator = statusUpdateValidator;
         this.parcelManager = parcelManager;
-        this.updatingPreConditionChecker = updatingPreConditionChecker;
+        this.statusUpdateConsentChecker = statusUpdateConsentChecker;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class DefaultStatusUpdateService implements StatusUpdateService {
                 .findById(statusUpdateDto.getParcelId())
                 .orElseThrow(() -> new ResourceNotFoundException(ApiErrorCode.PARCEL_NOT_FOUND.getKey(), statusUpdateDto.getParcelId()));
 
-        updatingPreConditionChecker.check(existingParcel, statusUpdateDto);
+        statusUpdateConsentChecker.check(existingParcel, statusUpdateDto);
 
         log.info("Parcel pre-condition check for status updating is completed. Parcel status is being updated");
 
