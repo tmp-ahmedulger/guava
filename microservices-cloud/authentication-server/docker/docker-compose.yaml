@@ -2,7 +2,7 @@ version: '3'
 
 services:
   #service 1: PostgresSQL Database Information
-  postgres-service:
+  postgres-auth-server:
     image: postgres
     container_name: postgres-auth-server
     environment:
@@ -24,11 +24,11 @@ services:
       - "9090:9090"
     restart: "no"
     depends_on:
-      - postgres-service
+      - postgres-auth-server
     environment:
       SPRING_PROFILES_ACTIVE: default
       SPRING_DATASOURCE_USERNAME: admin
       SPRING_DATASOURCE_PASSWORD: asd123
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-service:5432/authentication-server?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-auth-server:5432/authentication-server
       spring.config.import: configserver:http://host.docker.internal:8888
       eureka.client.serviceUrl.defaultZone: http://host.docker.internal:8761/eureka
