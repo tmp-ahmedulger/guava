@@ -28,7 +28,7 @@ public class AddressUpdatePermissionConsentFilter implements AddressUpdateConsen
         Long updaterUserId = params.getAddressUpdateDto().getUpdaterUserId();
 
         if (Objects.equals(ownerUserId, updaterUserId)) {
-            throw new ConsentFilterException(new ApiException(ApiErrorCode.SAME_ADDRESS.getKey()));
+            return;
         }
 
         User user = userLoader.loadById(updaterUserId);

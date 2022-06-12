@@ -2,6 +2,7 @@ package com.ulger.guava.parceldeliveryservice.infrastructure.controller;
 
 import com.ulger.guava.parceldeliveryservice.api.ApiException;
 import com.ulger.guava.parceldeliveryservice.api.PermissionException;
+import com.ulger.guava.parceldeliveryservice.api.consent.ConsentFilterException;
 import com.ulger.guava.parceldeliveryservice.infrastructure.service.MessageService;
 import com.ulger.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         if (e instanceof ValidationException) {
             return handleValidationException((ValidationException) e);
+        }
+
+        if (e instanceof ConsentFilterException && e.getCause() instanceof PermissionException) {
+            return handlePermissionException((PermissionException) e.getCause());
+        }
+
+        if (e instanceof ConsentFilterException && e.getCause() instanceof ApiException) {
+            return handleApiException((ApiException) e.getCause());
+        }
+
+        if (e instanceof ConsentFilterException) {
+            return handleConsentFilterException((ConsentFilterException) e);
         }
 
         return super.handleException(e, request);
@@ -71,7 +84,17 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .body(apiErrorResponse);
     }
 
-    private ResponseEntity<Object> handleOperationPermissionException(PermissionException e) {
+    private ResponseEntity<Object> handleConsentFilterException(ConsentFilterException e) {
+        ApiResponse apiErrorResponse = ApiResponse.builder()
+                .message("Your request can not processed. Contact with administrators.")
+                .build();
+
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(apiErrorResponse);
+    }
+
+    private ResponseEntity<Object> handlePermissionException(PermissionException e) {
 
         ApiResponse apiErrorResponse = ApiResponse.builder()
                 .message("You are not permitted to do this operation")
