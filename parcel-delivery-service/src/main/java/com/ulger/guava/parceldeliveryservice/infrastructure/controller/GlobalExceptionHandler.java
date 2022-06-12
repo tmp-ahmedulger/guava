@@ -1,8 +1,8 @@
 package com.ulger.guava.parceldeliveryservice.infrastructure.controller;
 
 import com.ulger.guava.parceldeliveryservice.api.ApiException;
-import com.ulger.guava.parceldeliveryservice.api.parcel.operation.OperationPermissionException;
-import com.ulger.guava.parceldeliveryservice.api.parcel.operation.PreConditionException;
+import com.ulger.guava.parceldeliveryservice.api.PermissionException;
+import com.ulger.guava.parceldeliveryservice.api.consent.ConsentFilterException;
 import com.ulger.guava.parceldeliveryservice.infrastructure.service.MessageService;
 import com.ulger.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
@@ -35,12 +35,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             return handleValidationException((ValidationException) e);
         }
 
-        if (e instanceof PreConditionException && e.getCause() instanceof OperationPermissionException) {
-            return handleOperationPermissionException((OperationPermissionException) e.getCause());
+        if (e instanceof ConsentFilterException && e.getCause() instanceof PermissionException) {
+            return handlePermissionException((PermissionException) e.getCause());
         }
 
-        if (e instanceof PreConditionException) {
-            return handlePreConditionException((PreConditionException) e);
+        if (e instanceof ConsentFilterException && e.getCause() instanceof ApiException) {
+            return handleApiException((ApiException) e.getCause());
+        }
+
+        if (e instanceof ConsentFilterException) {
+            return handleConsentFilterException((ConsentFilterException) e);
         }
 
         return super.handleException(e, request);
@@ -80,10 +84,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .body(apiErrorResponse);
     }
 
-    private ResponseEntity<Object> handleOperationPermissionException(OperationPermissionException e) {
-
+    private ResponseEntity<Object> handleConsentFilterException(ConsentFilterException e) {
         ApiResponse apiErrorResponse = ApiResponse.builder()
-                .message("You are not permitted to do this operation")
+                .message("Your request can not processed. Contact with administrators.")
                 .build();
 
         return ResponseEntity
@@ -91,19 +94,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .body(apiErrorResponse);
     }
 
-    private ResponseEntity<Object> handlePreConditionException(PreConditionException e) {
-        log.error("PreCondition Exception occurred, reason: {}", e.getKey(), e);
-
-        String resolvedMessage = messageService.getMessage(e.getKey(), e.getArgs());
-
-        log.error("PreCondition Exception detail: {}", resolvedMessage);
+    private ResponseEntity<Object> handlePermissionException(PermissionException e) {
 
         ApiResponse apiErrorResponse = ApiResponse.builder()
-                .message(resolvedMessage)
+                .message("You are not permitted to do this operation")
                 .build();
 
         return ResponseEntity
-                .badRequest()
+                .status(HttpStatus.FORBIDDEN)
                 .body(apiErrorResponse);
     }
 }

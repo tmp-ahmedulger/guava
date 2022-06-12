@@ -7,7 +7,6 @@ import com.ulger.guava.parceldeliveryservice.infrastructure.authentication.User;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-
 @Component
 @Qualifier("securityContextUserLoader")
 public class SecurityContextUserLoader implements UserLoader {

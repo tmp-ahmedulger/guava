@@ -4,7 +4,8 @@ public enum ApiErrorCode {
 
     SAME_ADDRESS(1, "error.parcel.address.same"),
     PARCEL_NOT_FOUND(2, "error.parcel.not-found"),
-    SAME_STATUS(3, "error.parcel.status.same");
+    SAME_STATUS(3, "error.parcel.status.same"),
+    ILLEGAL_ATTEMPT(4, "error.operation.illegal.attempt");
 
     private final int code;
     private final String key;
