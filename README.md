@@ -67,6 +67,20 @@ Config Repo Location
 <br>
 <br>
 
+**Testing The App**
+
+ 1. Create a user on auth-server. You can finds samples on swagger and Postman collection
+ 2. Login with created user and get JWT. (Postman sets jwt on environment automatically)
+ 3. Before send api request, set Bearer token on Headers with value starting JWT prefix
+
+| API | Endpoint |
+|--|--|
+| Create User | localhost:9090/rest/api/v1 |
+| Get JWT Token | localhost:9090/oauth/token |
+
+<br>
+<br>
+
 **Tech Stack**
 
  1. Spring Boot 
